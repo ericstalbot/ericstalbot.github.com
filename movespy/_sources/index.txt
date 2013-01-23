@@ -1,0 +1,21 @@
+movespy
+===================================
+
+Documentation
+-------------
+
+.. toctree::
+   :maxdepth: 2
+   
+   movesinitializers
+   
+
+
+
+Reference
+---------
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

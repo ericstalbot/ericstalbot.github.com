@@ -1,0 +1,561 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>movespy.moves &mdash; movespy 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="movespy 0.1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">movespy 0.1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for movespy.moves</h1><div class="highlight"><pre>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">This module defines one class and one function:</span>
+
+<span class="sd">- Moves: a class for running MOVES.</span>
+<span class="sd">- getDefaultAgeDistribution: a function for retrieving a national-level</span>
+<span class="sd">  default age distribution from MOVES</span>
+
+<span class="sd">How to Use this Module</span>
+<span class="sd">======================</span>
+
+
+<span class="sd">1. Import the module: ``import movespy.moves``</span>
+<span class="sd">2. Construct the initializer parameters (`activity` and `options`) for the `Moves` class.</span>
+<span class="sd">   (See *Moves Class Initializer Parameters* for details on the structure of these</span>
+<span class="sd">   parameters.)</span>
+<span class="sd">3. If needed, generate a default</span>
+<span class="sd">   age distribution for your `activity` parameter by using `getDefaultAgeDistribution`.</span>
+<span class="sd">4. Create an instance of the `Moves` class: ``m = movespy.moves.Moves(activity, options)``</span>
+<span class="sd">5. Run MOVES: ``emission_out, activity_out = m.run()``</span>
+<span class="sd">6. Use the output: ``print emission_out[:10]``</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">et</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">import</span> <span class="nn">MySQLdb</span>
+
+<span class="kn">import</span> <span class="nn">templates</span>
+<span class="kn">import</span> <span class="nn">movespy_settings</span>
+     
+<span class="n">OutputRow</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;OutputRow&#39;</span><span class="p">,</span><span class="s">&#39;link,pollutant,process,source,fuel,model_year,quantity&#39;</span><span class="p">)</span>
+		
+<span class="n">ActivityOutputRow</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;ActivityOutputRow&#39;</span><span class="p">,</span><span class="s">&#39;link,source,fuel,model_year,distance&#39;</span><span class="p">)</span>
+
+
+
+
+<div class="viewcode-block" id="Moves"><a class="viewcode-back" href="../../moves.html#movespy.moves.Moves">[docs]</a><span class="k">class</span> <span class="nc">Moves</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This is the class to use to run MOVES.</span>
+<span class="sd">    Just initialize an instance, then call the run method. For example:</span>
+
+<span class="sd">    &gt;&gt;&gt; links = {1: {&#39;grade&#39;: -1.2,</span>
+<span class="sd">                     &#39;length&#39;: 0.25,</span>
+<span class="sd">                     &#39;road_type&#39;: 3,</span>
+<span class="sd">                     &#39;source_distr&#39;: {21: 1.0},</span>
+<span class="sd">                     &#39;speed&#39;: 34,</span>
+<span class="sd">                     &#39;volume&#39;: 400}}</span>
+<span class="sd">    &gt;&gt;&gt; activity =  {&#39;age_distr&#39;: {21: {5: 1.0}},</span>
+<span class="sd">                     &#39;county&#39;: 50027,</span>
+<span class="sd">                     &#39;day_type&#39;: 5,</span>
+<span class="sd">                     &#39;hour&#39;: 16,</span>
+<span class="sd">                     &#39;month&#39;: 6,</span>
+<span class="sd">                     &#39;year&#39;: 2015,</span>
+<span class="sd">                     &#39;links&#39;: links}</span>
+<span class="sd">    &gt;&gt;&gt; options = {&#39;detail&#39;: &#39;average&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; m = Moves(activity, options)</span>
+<span class="sd">    &gt;&gt;&gt; emissions_out, activity_out = m.run()</span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+
+    <span class="n">tablenames</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">,</span> <span class="s">&#39;source_distr&#39;</span><span class="p">,</span> <span class="s">&#39;age_distr&#39;</span><span class="p">,</span> <span class="s">&#39;fuel_supply&#39;</span><span class="p">,</span> <span class="s">&#39;fuel_form&#39;</span><span class="p">,</span> <span class="s">&#39;meteor&#39;</span><span class="p">,</span> <span class="s">&#39;opmode_distr&#39;</span><span class="p">]</span>
+
+    <span class="n">tablepaths</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;link/parts/link/filename&#39;</span><span class="p">,</span>
+                           <span class="s">&#39;linksourcetypehour/parts/linkSourceTypeHour/filename&#39;</span><span class="p">,</span>
+                           <span class="s">&#39;agedistribution/parts/sourceTypeAgeDistribution/filename&#39;</span><span class="p">,</span>
+                           <span class="s">&#39;fuel/parts/FuelSupply/filename&#39;</span><span class="p">,</span>
+                           <span class="s">&#39;fuel/parts/FuelFormulation/filename&#39;</span><span class="p">,</span>
+                           <span class="s">&#39;zonemonthhour/parts/zoneMonthHour/filename&#39;</span><span class="p">,</span>
+                           <span class="s">&#39;linkopmodedistribution/parts/opModeDistribution/filename&#39;</span><span class="p">]</span>
+
+    <span class="n">process_pollutant</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">91</span><span class="p">,</span><span class="mi">101</span><span class="p">,</span><span class="mi">102</span><span class="p">,</span><span class="mi">111</span><span class="p">,</span><span class="mi">112</span><span class="p">),</span>
+                     <span class="mi">9</span><span class="p">:(</span><span class="mi">116</span><span class="p">,),</span>
+                     <span class="mi">10</span><span class="p">:(</span><span class="mi">117</span><span class="p">,)}</span>
+
+    
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_hourToHourID</span><span class="p">(</span><span class="n">hour</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">hour</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="Moves.__init__"><a class="viewcode-back" href="../../moves.html#movespy.moves.Moves.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activity</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Use this initializer to set up a MOVES run. The</span>
+<span class="sd">        activity parameter describes the vehicle activity that you are</span>
+<span class="sd">        modeling, and the options parameter controls how the model runs.</span>
+<span class="sd">        Each of these parameters is a nested dictionary; to learn the</span>
+<span class="sd">        structure for these dictionaries see</span>
+<span class="sd">        *Moves Class Initializer Parameters*.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">activity</span> <span class="o">=</span> <span class="n">activity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">options</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&#39;movespy_&#39;</span><span class="o">+</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%Y%m</span><span class="si">%d</span><span class="s">_%H%M%S&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">moves_dir</span> <span class="o">=</span> <span class="n">movespy_settings</span><span class="o">.</span><span class="n">moves_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">movespy_settings</span><span class="o">.</span><span class="n">moves_db</span><span class="p">)</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">runspec_template</span> <span class="o">=</span> <span class="n">templates</span><span class="o">.</span><span class="n">runspec_template</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">importscript_template</span> <span class="o">=</span> <span class="n">templates</span><span class="o">.</span><span class="n">importscript_template</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cleanup</span> <span class="o">=</span> <span class="bp">True</span>
+
+        </div>
+<div class="viewcode-block" id="Moves.run"><a class="viewcode-back" href="../../moves.html#movespy.moves.Moves.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Use this method to run MOVES.</span>
+
+<span class="sd">        Returns a tuple of two lists: the emissions output and the</span>
+<span class="sd">        activity output. </span>
+
+<span class="sd">        Emissions Output</span>
+<span class="sd">        ================</span>
+
+<span class="sd">        The emissions output is a list of named tuples with</span>
+<span class="sd">        the following names (in order of appearance in the tuple):</span>
+
+<span class="sd">        link</span>
+<span class="sd">          The link ID as given in the `activity` initializer parameter. </span>
+
+<span class="sd">        pollutant</span>
+<span class="sd">          The MOVES pollutant ID.</span>
+
+<span class="sd">        process</span>
+<span class="sd">          The MOVES process ID.</span>
+
+<span class="sd">        source</span>
+<span class="sd">          The MOVES source type ID.</span>
+
+<span class="sd">        fuel</span>
+<span class="sd">          The MOVES fuel type ID.</span>
+
+<span class="sd">        model_year</span>
+<span class="sd">          The vehicle model year.</span>
+
+<span class="sd">        quantity</span>
+<span class="sd">          The total emission amount for the associated link, pollutant</span>
+<span class="sd">          process, source, fuel and model year. This value is either in</span>
+<span class="sd">          grams or kilojoules, depending on the pollutant.</span>
+
+<span class="sd">        Activity Output</span>
+<span class="sd">        ===============</span>
+
+<span class="sd">        The activity output is a list of named tuples with the following names</span>
+<span class="sd">        (in order of appearance in the tuple):</span>
+
+<span class="sd">        link</span>
+<span class="sd">          The link ID as given in the `activity` initializer parameter. </span>
+
+<span class="sd">        source</span>
+<span class="sd">          The MOVES source type ID.</span>
+
+<span class="sd">        fuel</span>
+<span class="sd">          The MOVES fuel type ID.</span>
+
+<span class="sd">        model_year</span>
+<span class="sd">          The vehicle model year.</span>
+
+<span class="sd">        distance</span>
+<span class="sd">          The total vehicle-miles traveled for the given link,</span>
+<span class="sd">          source, fuel and model_year.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+
+
+        <span class="n">wd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wd</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span>
+
+        <span class="n">importscript_loc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wd</span><span class="p">,</span> <span class="n">prefix</span><span class="o">+</span><span class="s">&#39;importscript.xml&#39;</span><span class="p">)</span>
+        <span class="n">runspec_loc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wd</span><span class="p">,</span> <span class="n">prefix</span><span class="o">+</span><span class="s">&#39;runspec.xml&#39;</span><span class="p">)</span>
+
+        <span class="n">tablelocations</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wd</span><span class="p">,</span> <span class="n">prefix</span><span class="o">+</span><span class="n">tname</span><span class="o">+</span><span class="s">&#39;.csv&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">tname</span> <span class="ow">in</span> <span class="n">Moves</span><span class="o">.</span><span class="n">tablenames</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">tname</span><span class="p">,</span> <span class="n">tloc</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">Moves</span><span class="o">.</span><span class="n">tablenames</span><span class="p">,</span> <span class="n">tablelocations</span><span class="p">):</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">tloc</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">_table&#39;</span><span class="o">%</span><span class="n">tname</span><span class="p">))</span>      
+
+
+        <span class="n">mcl</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moves_dir</span><span class="p">,</span><span class="s">&#39;setenv.bat&#39;</span><span class="p">),</span>
+               <span class="s">&#39;&amp;&amp;&#39;</span><span class="p">,</span>
+               <span class="s">&#39;java&#39;</span><span class="p">,</span>
+               <span class="s">&#39;gov.epa.otaq.moves.master.commandline.MOVESCommandLine&#39;</span><span class="p">]</span>
+
+        <span class="nb">open</span><span class="p">(</span><span class="n">importscript_loc</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">importscript</span><span class="p">)</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">runspec_loc</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runspec</span><span class="p">)</span>
+   
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">mcl</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;-i&#39;</span><span class="p">,</span><span class="n">importscript_loc</span><span class="p">],</span> <span class="n">cwd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">moves_dir</span><span class="p">)</span>        
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">mcl</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;-r&#39;</span><span class="p">,</span><span class="n">runspec_loc</span><span class="p">],</span> <span class="n">cwd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">moves_dir</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleanup</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">tloc</span> <span class="ow">in</span> <span class="n">tablelocations</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tloc</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">importscript_loc</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">runspec_loc</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;drop database movesexecution&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;drop database movesworker&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;drop database </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s">&#39;input&#39;</span><span class="p">))</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;&#39;&#39;   select  linkid as link,</span>
+<span class="s">                                                pollutantid as pollutant,</span>
+<span class="s">                                                processid as process,</span>
+<span class="s">                                                sourcetypeid as source,</span>
+<span class="s">                                                fueltypeid as fuel,</span>
+<span class="s">                                                modelyearid as model_year,</span>
+<span class="s">                                                emissionquant as quantity</span>
+<span class="s">                                        from {0}output.movesoutput&#39;&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">))</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;&#39;&#39;     select  linkid as link,</span>
+<span class="s">                                                sourcetypeid as source,</span>
+<span class="s">                                                fueltypeid as fuel,</span>
+<span class="s">                                                modelyearid as model_year,</span>
+<span class="s">                                                activity as distance</span>
+<span class="s">                                                from {0}output.movesactivityoutput </span>
+<span class="s">                                            where activitytypeid = 1</span>
+<span class="s">                                            &#39;&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span><span class="p">))</span>
+
+
+        <span class="n">activity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;drop database </span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s">&#39;output&#39;</span><span class="p">))</span>
+
+		
+								
+								
+		
+        
+        <span class="k">return</span> <span class="p">([</span><span class="n">OutputRow</span><span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">output</span><span class="p">],</span> 
+		         <span class="p">[</span><span class="n">ActivityOutputRow</span><span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">activity</span><span class="p">])</span>
+         
+
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">links_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;linkID,countyID,zoneID,roadTypeID,linkLength,linkVolume,linkAvgSpeed,linkDescription,linkAvgGrade</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="n">zone_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;county&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;0&#39;</span>
+        <span class="k">for</span> <span class="n">link_id</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">link_id</span><span class="p">,</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;county&#39;</span><span class="p">],</span>
+                   <span class="n">zone_id</span><span class="p">,</span>
+                   <span class="n">link</span><span class="p">[</span><span class="s">&#39;road_type&#39;</span><span class="p">],</span>
+                   <span class="n">link</span><span class="p">[</span><span class="s">&#39;length&#39;</span><span class="p">],</span>
+                   <span class="n">link</span><span class="p">[</span><span class="s">&#39;volume&#39;</span><span class="p">],</span>
+                   <span class="n">link</span><span class="p">[</span><span class="s">&#39;speed&#39;</span><span class="p">],</span>
+                   <span class="n">link</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;description&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">),</span>
+                   <span class="n">link</span><span class="p">[</span><span class="s">&#39;grade&#39;</span><span class="p">]</span>
+                   <span class="p">]</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">source_distr_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;linkID,sourceTypeID,sourceTypeHourFraction</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">for</span> <span class="n">link_id</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">source_type_id</span><span class="p">,</span> <span class="n">fraction</span> <span class="ow">in</span> <span class="n">link</span><span class="p">[</span><span class="s">&#39;source_distr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">link_id</span><span class="p">,</span>
+                       <span class="n">source_type_id</span><span class="p">,</span>
+                       <span class="n">fraction</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">age_distr_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;sourceTypeID,yearID,ageID,ageFraction</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">for</span> <span class="n">source_type_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;age_distr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">age</span><span class="p">,</span><span class="n">fraction</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;age_distr&#39;</span><span class="p">][</span><span class="n">source_type_id</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">source_type_id</span><span class="p">,</span>
+                       <span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">],</span>
+                       <span class="n">age</span><span class="p">,</span>
+                       <span class="n">fraction</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">opmode_distr_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">activity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activity</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;sourceTypeID,hourDayID,linkID,polProcessID,opModeID,opModeFraction</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s">&#39;detail&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;average&#39;</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">options</span><span class="p">[</span><span class="s">&#39;detail&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;opmode&#39;</span><span class="p">:</span>
+            <span class="n">hour_day_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Moves</span><span class="o">.</span><span class="n">_hourToHourID</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">]))</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;day_type&#39;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">link_id</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">activity</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">source_type_id</span> <span class="ow">in</span> <span class="n">link</span><span class="p">[</span><span class="s">&#39;opmode_distr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c">#error will be thrown here if no opmode distr (I&#39;m assuming we can leave out opmodes link-wise)</span>
+                    <span class="k">for</span> <span class="n">process_id</span><span class="p">,</span> <span class="n">pollutant_ids</span> <span class="ow">in</span> <span class="n">Moves</span><span class="o">.</span><span class="n">process_pollutant</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="c">#options[&#39;proc_pol_sel&#39;].iteritems():</span>
+                        <span class="k">for</span> <span class="n">pollutant_id</span> <span class="ow">in</span> <span class="n">pollutant_ids</span><span class="p">:</span>
+                            <span class="n">pollutant_process_id</span> <span class="o">=</span> <span class="n">pollutant_id</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">process_id</span>
+                            <span class="n">op_mode_dist</span> <span class="o">=</span> <span class="n">link</span><span class="p">[</span><span class="s">&#39;opmode_distr&#39;</span><span class="p">][</span><span class="n">source_type_id</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                            <span class="k">if</span> <span class="n">pollutant_process_id</span> <span class="o">!=</span> <span class="mi">11609</span> <span class="ow">and</span> <span class="mi">501</span> <span class="ow">in</span> <span class="n">op_mode_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                                <span class="k">if</span> <span class="mi">1</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">op_mode_dist</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                                    <span class="n">op_mode_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                                <span class="n">op_mode_dist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">op_mode_dist</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">501</span><span class="p">)</span>
+                            <span class="k">for</span> <span class="n">operating_mode_id</span><span class="p">,</span><span class="n">fraction</span> <span class="ow">in</span> <span class="n">op_mode_dist</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                                <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">source_type_id</span><span class="p">,</span>
+                                       <span class="n">hour_day_id</span><span class="p">,</span>
+                                       <span class="n">link_id</span><span class="p">,</span>
+                                       <span class="n">pollutant_process_id</span><span class="p">,</span>
+                                       <span class="n">operating_mode_id</span><span class="p">,</span>
+                                       <span class="n">fraction</span><span class="p">]</span>
+                                <span class="n">result</span> <span class="o">+=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&#39;Detail level is {0}, but must be either &quot;average&quot; or &quot;opmode&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s">&#39;detail&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">link_id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fuel_supply_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;   select countyID, year.fuelYearID AS fuelYearID, monthGroupID,</span>
+<span class="s">                        fuelFormulationID, marketShare, marketShareCV</span>
+<span class="s">                    from fuelsupply</span>
+<span class="s">                    LEFT JOIN year ON fuelsupply.fuelYearID = year.fuelYearID</span>
+<span class="s">                    WHERE countyID = </span><span class="si">%s</span><span class="s"> AND yearID = </span><span class="si">%s</span><span class="s"> AND monthGroupID = </span><span class="si">%s</span><span class="s">&#39;&#39;&#39;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;county&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;month&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getCSV</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fuel_form_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;   select *</span>
+<span class="s">                    from fuelformulation</span>
+<span class="s">                    WHERE fuelFormulationID in</span>
+<span class="s">                    (select fuelFormulationID</span>
+<span class="s">                    from fuelsupply</span>
+<span class="s">                    LEFT JOIN year ON fuelsupply.fuelYearID = year.fuelYearID</span>
+<span class="s">                    WHERE countyID = </span><span class="si">%s</span><span class="s"> AND yearID = </span><span class="si">%s</span><span class="s"> AND monthGroupID = </span><span class="si">%s</span><span class="s">)&#39;&#39;&#39;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;county&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;month&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getCSV</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">meteor_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">hour_id</span> <span class="o">=</span> <span class="n">Moves</span><span class="o">.</span><span class="n">_hourToHourID</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">])</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;   select monthID, zoneID, hourID, temperature, relHumidity</span>
+<span class="s">                    from zonemonthhour</span>
+<span class="s">                    WHERE monthID = </span><span class="si">%s</span><span class="s"> AND zoneID = </span><span class="si">%s</span><span class="s">0 AND hourID = </span><span class="si">%s</span><span class="s">&#39;&#39;&#39;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="n">sql</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;month&#39;</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;county&#39;</span><span class="p">],</span><span class="n">hour_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getCSV</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    
+
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_getCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">query</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">field_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">description</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">field_names</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;None&#39;</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">runspec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">et</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runspec_template</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setSelections</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;scaleinputdatabase&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;databasename&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s">&#39;input&#39;</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;outputdatabase&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;databasename&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s">&#39;output&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">et</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">importscript</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">wd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wd</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span>
+
+        <span class="n">root</span> <span class="o">=</span> <span class="n">et</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">importscript_template</span><span class="p">)</span>
+        <span class="n">importer</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;importer&#39;</span><span class="p">)</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;filters&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setSelections</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;databaseselection&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;databasename&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s">&#39;input&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">tname</span><span class="p">,</span> <span class="n">tpath</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">Moves</span><span class="o">.</span><span class="n">tablenames</span><span class="p">,</span> <span class="n">Moves</span><span class="o">.</span><span class="n">tablepaths</span><span class="p">):</span>
+            <span class="n">importer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">tpath</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">wd</span><span class="p">,</span> <span class="n">prefix</span><span class="o">+</span><span class="n">tname</span><span class="o">+</span><span class="s">&#39;.csv&#39;</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">et</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+
+
+    <span class="k">def</span> <span class="nf">_setSelections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+        <span class="n">activity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activity</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+        
+        <span class="n">geo_sel</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;geographicselections/geographicselection&#39;</span><span class="p">)</span>
+        <span class="n">geo_sel</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;county&#39;</span><span class="p">]))</span>
+        
+        <span class="n">time_span</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;timespan&#39;</span><span class="p">)</span>
+        <span class="n">time_span</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;year&#39;</span><span class="p">]))</span>
+        <span class="n">time_span</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;month&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;month&#39;</span><span class="p">]))</span>
+        <span class="n">time_span</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;day&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;day_type&#39;</span><span class="p">]))</span>
+        <span class="n">time_span</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;beginhour&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Moves</span><span class="o">.</span><span class="n">_hourToHourID</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">])))</span>
+        <span class="n">time_span</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;endhour&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Moves</span><span class="o">.</span><span class="n">_hourToHourID</span><span class="p">(</span><span class="n">activity</span><span class="p">[</span><span class="s">&#39;hour&#39;</span><span class="p">])))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;pollutants&#39;</span><span class="p">):</span>
+            <span class="n">pol_sel</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;pollutantprocessassociations&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">pol_sel</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;pollutantkey&#39;</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s">&#39;pollutants&#39;</span><span class="p">]:</span>
+                    <span class="n">pol_sel</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">None</span>
+        
+        
+    
+</div>
+<div class="viewcode-block" id="getDefaultAgeDistribution"><a class="viewcode-back" href="../../moves.html#movespy.moves.getDefaultAgeDistribution">[docs]</a><span class="k">def</span> <span class="nf">getDefaultAgeDistribution</span><span class="p">(</span><span class="n">year</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Use this function to get a MOVES national-level default age distribution.</span>
+
+<span class="sd">    Returns a dictionary suitable for inclusion in the</span>
+<span class="sd">    Moves class initializer activity parameter.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">et</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">templates</span><span class="o">.</span><span class="n">mean_age_run_spec</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;timespan&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;year&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">))</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;outputdatabase&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;databasename&#39;</span><span class="p">,</span> <span class="s">&#39;average_age_dist_output&#39;</span><span class="p">)</span>
+    <span class="n">runspec_loc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;average_age_dist_runspec.xml&#39;</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">runspec_loc</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">et</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
+    <span class="n">mcl</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">movespy_settings</span><span class="o">.</span><span class="n">moves_dir</span><span class="p">,</span><span class="s">&#39;setenv.bat&#39;</span><span class="p">),</span>
+               <span class="s">&#39;&amp;&amp;&#39;</span><span class="p">,</span>
+               <span class="s">&#39;java&#39;</span><span class="p">,</span>
+               <span class="s">&#39;gov.epa.otaq.moves.master.commandline.MOVESCommandLine&#39;</span><span class="p">]</span>
+
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">(</span><span class="n">mcl</span> <span class="o">+</span> <span class="p">[</span><span class="s">&#39;-r&#39;</span><span class="p">,</span><span class="n">runspec_loc</span><span class="p">],</span> <span class="n">cwd</span> <span class="o">=</span> <span class="n">movespy_settings</span><span class="o">.</span><span class="n">moves_dir</span><span class="p">)</span>
+    <span class="n">cur</span> <span class="o">=</span> <span class="n">MySQLdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span> <span class="o">=</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">db</span> <span class="o">=</span> <span class="n">movespy_settings</span><span class="o">.</span><span class="n">moves_db</span><span class="p">)</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">sql</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;select sourcetypeid, ageid, population from movesexecution.sourcetypeagepopulation</span>
+<span class="s">                where yearid = </span><span class="si">%s</span><span class="s">&#39;&#39;&#39;</span><span class="o">%</span><span class="n">year</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">source_type</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">population</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">source_type</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">temp</span><span class="p">[</span><span class="n">age</span><span class="p">]</span> <span class="o">=</span> <span class="n">population</span>
+    <span class="k">for</span> <span class="n">source_type</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">source_type</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">age</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="n">source_type</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">source_type</span><span class="p">][</span><span class="n">age</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">total</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">runspec_loc</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;drop database movesexecution&#39;</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;drop database movesworker&#39;</span><span class="p">)</span>
+    <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;drop database average_age_dist_output&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+
+ </div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;runs the module tests&#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+        
+
+
+    
+
+    
+
+
+    
+
+    
+
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">movespy 0.1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Eric S. Talbot.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

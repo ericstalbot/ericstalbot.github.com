@@ -1,0 +1,359 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>movespy.moves Module &mdash; movespy 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="movespy 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Moves Class Initializer Parameters" href="movesinitializers.html" />
+    <link rel="prev" title="Welcome to movespy’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="movesinitializers.html" title="Moves Class Initializer Parameters"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to movespy’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-movespy.moves">
+<span id="movespy-moves-module"></span><h1>movespy.moves Module<a class="headerlink" href="#module-movespy.moves" title="Permalink to this headline">¶</a></h1>
+<p>This module defines one class and one function:</p>
+<ul class="simple">
+<li>Moves: a class for running MOVES.</li>
+<li>getDefaultAgeDistribution: a function for retrieving a national-level
+default age distribution from MOVES</li>
+</ul>
+<div class="section" id="how-to-use-this-module">
+<h2>How to Use this Module<a class="headerlink" href="#how-to-use-this-module" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Import the module: <tt class="docutils literal"><span class="pre">import</span> <span class="pre">movespy.moves</span></tt></li>
+<li>Construct the initializer parameters (<cite>activity</cite> and <cite>options</cite>) for the <cite>Moves</cite> class.
+(See <em>Moves Class Initializer Parameters</em> for details on the structure of these
+parameters.)</li>
+<li>If needed, generate a default
+age distribution for your <cite>activity</cite> parameter by using <cite>getDefaultAgeDistribution</cite>.</li>
+<li>Create an instance of the <cite>Moves</cite> class: <tt class="docutils literal"><span class="pre">m</span> <span class="pre">=</span> <span class="pre">movespy.moves.Moves(activity,</span> <span class="pre">options)</span></tt></li>
+<li>Run MOVES: <tt class="docutils literal"><span class="pre">emission_out,</span> <span class="pre">activity_out</span> <span class="pre">=</span> <span class="pre">m.run()</span></tt></li>
+<li>Use the output: <tt class="docutils literal"><span class="pre">print</span> <span class="pre">emission_out[:10]</span></tt></li>
+</ol>
+<dl class="class">
+<dt id="movespy.moves.ActivityOutputRow">
+<em class="property">class </em><tt class="descclassname">movespy.moves.</tt><tt class="descname">ActivityOutputRow</tt><a class="headerlink" href="#movespy.moves.ActivityOutputRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>ActivityOutputRow(link, source, fuel, model_year, distance)</p>
+<dl class="method">
+<dt id="movespy.moves.ActivityOutputRow.__getnewargs__">
+<tt class="descname">__getnewargs__</tt><big>(</big><big>)</big><a class="headerlink" href="#movespy.moves.ActivityOutputRow.__getnewargs__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self as a plain tuple.  Used by copy and pickle.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="movespy.moves.ActivityOutputRow.__new__">
+<em class="property">static </em><tt class="descname">__new__</tt><big>(</big><em>_cls</em>, <em>link</em>, <em>source</em>, <em>fuel</em>, <em>model_year</em>, <em>distance</em><big>)</big><a class="headerlink" href="#movespy.moves.ActivityOutputRow.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new instance of ActivityOutputRow(link, source, fuel, model_year, distance)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="movespy.moves.ActivityOutputRow.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#movespy.moves.ActivityOutputRow.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a nicely formatted representation string</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.ActivityOutputRow.distance">
+<tt class="descname">distance</tt><a class="headerlink" href="#movespy.moves.ActivityOutputRow.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.ActivityOutputRow.fuel">
+<tt class="descname">fuel</tt><a class="headerlink" href="#movespy.moves.ActivityOutputRow.fuel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.ActivityOutputRow.link">
+<tt class="descname">link</tt><a class="headerlink" href="#movespy.moves.ActivityOutputRow.link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.ActivityOutputRow.model_year">
+<tt class="descname">model_year</tt><a class="headerlink" href="#movespy.moves.ActivityOutputRow.model_year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.ActivityOutputRow.source">
+<tt class="descname">source</tt><a class="headerlink" href="#movespy.moves.ActivityOutputRow.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="movespy.moves.Moves">
+<em class="property">class </em><tt class="descclassname">movespy.moves.</tt><tt class="descname">Moves</tt><big>(</big><em>activity</em>, <em>options</em><big>)</big><a class="reference internal" href="_modules/movespy/moves.html#Moves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#movespy.moves.Moves" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the class to use to run MOVES.
+Just initialize an instance, then call the run method. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
+<span class="go">                 &#39;length&#39;: 0.25,</span>
+<span class="go">                 &#39;road_type&#39;: 3,</span>
+<span class="go">                 &#39;source_distr&#39;: {21: 1.0},</span>
+<span class="go">                 &#39;speed&#39;: 34,</span>
+<span class="go">                 &#39;volume&#39;: 400}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+<span class="go">                 &#39;county&#39;: 50027,</span>
+<span class="go">                 &#39;day_type&#39;: 5,</span>
+<span class="go">                 &#39;hour&#39;: 16,</span>
+<span class="go">                 &#39;month&#39;: 6,</span>
+<span class="go">                 &#39;year&#39;: 2015,</span>
+<span class="go">                 &#39;links&#39;: links}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;detail&#39;</span><span class="p">:</span> <span class="s">&#39;average&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Moves</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">emissions_out</span><span class="p">,</span> <span class="n">activity_out</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="movespy.moves.Moves.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>activity</em>, <em>options</em><big>)</big><a class="reference internal" href="_modules/movespy/moves.html#Moves.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#movespy.moves.Moves.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this initializer to set up a MOVES run. The
+activity parameter describes the vehicle activity that you are
+modeling, and the options parameter controls how the model runs.
+Each of these parameters is a nested dictionary; to learn the
+structure for these dictionaries see
+<em>Moves Class Initializer Parameters</em>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.Moves.__weakref__">
+<tt class="descname">__weakref__</tt><a class="headerlink" href="#movespy.moves.Moves.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="movespy.moves.Moves.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/movespy/moves.html#Moves.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#movespy.moves.Moves.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this method to run MOVES.</p>
+<p>Returns a tuple of two lists: the emissions output and the
+activity output.</p>
+<p>The emissions output is a list of named tuples with
+the following names (in order of appearance in the tuple):</p>
+<dl class="docutils">
+<dt>link</dt>
+<dd>The link ID as given in the <cite>activity</cite> initializer parameter.</dd>
+<dt>pollutant</dt>
+<dd>The MOVES pollutant ID.</dd>
+<dt>process</dt>
+<dd>The MOVES process ID.</dd>
+<dt>source</dt>
+<dd>The MOVES source type ID.</dd>
+<dt>fuel</dt>
+<dd>The MOVES fuel type ID.</dd>
+<dt>model_year</dt>
+<dd>The vehicle model year.</dd>
+<dt>quantity</dt>
+<dd>The total emission amount for the associated link, pollutant
+process, source, fuel and model year. This value is either in
+grams or kilojoules, depending on the pollutant.</dd>
+</dl>
+<p>The activity output is a list of named tuples with the following names
+(in order of appearance in the tuple):</p>
+<dl class="docutils">
+<dt>link</dt>
+<dd>The link ID as given in the <cite>activity</cite> initializer parameter.</dd>
+<dt>source</dt>
+<dd>The MOVES source type ID.</dd>
+<dt>fuel</dt>
+<dd>The MOVES fuel type ID.</dd>
+<dt>model_year</dt>
+<dd>The vehicle model year.</dd>
+<dt>distance</dt>
+<dd>The total vehicle-miles traveled for the given link,
+source, fuel and model_year.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="movespy.moves.OutputRow">
+<em class="property">class </em><tt class="descclassname">movespy.moves.</tt><tt class="descname">OutputRow</tt><a class="headerlink" href="#movespy.moves.OutputRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>OutputRow(link, pollutant, process, source, fuel, model_year, quantity)</p>
+<dl class="method">
+<dt id="movespy.moves.OutputRow.__getnewargs__">
+<tt class="descname">__getnewargs__</tt><big>(</big><big>)</big><a class="headerlink" href="#movespy.moves.OutputRow.__getnewargs__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return self as a plain tuple.  Used by copy and pickle.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="movespy.moves.OutputRow.__new__">
+<em class="property">static </em><tt class="descname">__new__</tt><big>(</big><em>_cls</em>, <em>link</em>, <em>pollutant</em>, <em>process</em>, <em>source</em>, <em>fuel</em>, <em>model_year</em>, <em>quantity</em><big>)</big><a class="headerlink" href="#movespy.moves.OutputRow.__new__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new instance of OutputRow(link, pollutant, process, source, fuel, model_year, quantity)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="movespy.moves.OutputRow.__repr__">
+<tt class="descname">__repr__</tt><big>(</big><big>)</big><a class="headerlink" href="#movespy.moves.OutputRow.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a nicely formatted representation string</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.OutputRow.fuel">
+<tt class="descname">fuel</tt><a class="headerlink" href="#movespy.moves.OutputRow.fuel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.OutputRow.link">
+<tt class="descname">link</tt><a class="headerlink" href="#movespy.moves.OutputRow.link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.OutputRow.model_year">
+<tt class="descname">model_year</tt><a class="headerlink" href="#movespy.moves.OutputRow.model_year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 5</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.OutputRow.pollutant">
+<tt class="descname">pollutant</tt><a class="headerlink" href="#movespy.moves.OutputRow.pollutant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.OutputRow.process">
+<tt class="descname">process</tt><a class="headerlink" href="#movespy.moves.OutputRow.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.OutputRow.quantity">
+<tt class="descname">quantity</tt><a class="headerlink" href="#movespy.moves.OutputRow.quantity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 6</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="movespy.moves.OutputRow.source">
+<tt class="descname">source</tt><a class="headerlink" href="#movespy.moves.OutputRow.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="movespy.moves.getDefaultAgeDistribution">
+<tt class="descclassname">movespy.moves.</tt><tt class="descname">getDefaultAgeDistribution</tt><big>(</big><em>year</em><big>)</big><a class="reference internal" href="_modules/movespy/moves.html#getDefaultAgeDistribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#movespy.moves.getDefaultAgeDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this function to get a MOVES national-level default age distribution.</p>
+<p>Returns a dictionary suitable for inclusion in the
+Moves class initializer activity parameter.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">movespy.moves Module</a><ul>
+<li><a class="reference internal" href="#how-to-use-this-module">How to Use this Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to movespy&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="movesinitializers.html"
+                        title="next chapter">Moves Class Initializer Parameters</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/moves.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="movesinitializers.html" title="Moves Class Initializer Parameters"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to movespy’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Eric S. Talbot.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
