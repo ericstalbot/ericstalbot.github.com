@@ -7,6 +7,8 @@ Documentation
 .. toctree::
    :maxdepth: 2
    
+   The Project <project>
+   docs
    movesinitializers
    
 

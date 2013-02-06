@@ -1,0 +1,183 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>movespy &mdash; movespy 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="movespy 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="movespy User Guide" href="docs.html" />
+    <link rel="prev" title="movespy" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="docs.html" title="movespy User Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="movespy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="movespy">
+<h1>movespy<a class="headerlink" href="#movespy" title="Permalink to this headline">¶</a></h1>
+<p>movespy simplifies interaction with
+MOVES <a class="footnote-reference" href="#id2" id="id1">[1]</a> for project-level analysis.</p>
+<div class="section" id="author">
+<h2>Author<a class="headerlink" href="#author" title="Permalink to this headline">¶</a></h2>
+<p>Eric S. Talbot &lt;<a class="reference external" href="mailto:ericstalbot&#37;&#52;&#48;gmail&#46;com">ericstalbot<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>License is the BSD 2-clause license. See license.txt.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>To install movespy, copy the source files to any importable location. Also
+edit the &#8220;movespy_settings.py&#8221; module:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>moves_dir</cite>: a string that is the path to you MOVES installation directory</li>
+<li><cite>moves_db</cite>: a string that is the name of your MOVES database (assumed to be local)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The following code
+executes a complete MOVES run and retrieves the result:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
+             <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+             <span class="s">&#39;opmode_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">11</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;road_type&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+             <span class="s">&#39;source_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+             <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+             <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
+
+<span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
+             <span class="s">&#39;day_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+             <span class="s">&#39;hour&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+             <span class="s">&#39;month&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+             <span class="s">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2015</span><span class="p">,</span>
+             <span class="s">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;detail&#39;</span><span class="p">:</span> <span class="s">&#39;average&#39;</span><span class="p">,</span>
+           <span class="s">&#39;pollutants&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">]}</span>
+
+<span class="kn">import</span> <span class="nn">movespy.moves</span>
+<span class="n">moves</span> <span class="o">=</span> <span class="n">movespy</span><span class="o">.</span><span class="n">moves</span><span class="o">.</span><span class="n">Moves</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="n">emissions_out</span><span class="p">,</span> <span class="n">activity_out</span> <span class="o">=</span> <span class="n">moves</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">total_emissions</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">row</span><span class="o">.</span><span class="n">quantity</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">emissions_out</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>MOVES is a software package developed by the U.S. Environmental Protection Agency
+for estimating air pollution from vehicles. Using MOVES is required for certain federally
+prescribed analyses. For more information on MOVES, see
+<a class="reference external" href="http://www.epa.gov/otaq/models/moves/index.htm">http://www.epa.gov/otaq/models/moves/index.htm</a>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">movespy</a><ul>
+<li><a class="reference internal" href="#author">Author</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">movespy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="docs.html"
+                        title="next chapter">movespy User Guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/project.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="docs.html" title="movespy User Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="movespy"
+             >previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Eric S. Talbot.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

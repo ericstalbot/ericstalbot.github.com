@@ -1,0 +1,153 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>User Guide &mdash; movespy 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="movespy 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Moves Class Initializer Parameters" href="movesinitializers.html" />
+    <link rel="prev" title="movespy" href="project.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="movesinitializers.html" title="Moves Class Initializer Parameters"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="movespy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>MOVES is a software package developed by the US EPA for estimating pollution
+from cars. MOVES is a valuable resource for analysts because it is based
+upon substantial and rigourous research. Some analysts may be required
+to use MOVES because it is mandatory for certain analyses linked to federal
+transportation funding.
+Unfortunately, using MOVES is sometimes tedious. In typical usage analysts must construct
+and maintain several
+input tables, then configure and launch the MOVES run using a series of menu options,
+forms, and mouse clicks. The cost of running MOVES discourages exploratory analysis or
+any type of analysis that requires more than a few runs.
+movespy aims to make using MOVES easier by making it easy to
+write programs to automate MOVES runs and retrieve the results.</p>
+<p>Currently movespy focuses on project-level on-road analyses. In the future
+movespy may also focus on county-level or off-road analyses.</p>
+</div>
+<div class="section" id="design">
+<h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
+<p>The core component of movespy is the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> class. Instances of the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt>
+class are initialized with activity and options parameters which completely
+specify a MOVES run. Calling the <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> method of a <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> instance executes a
+complete MOVES run, including creating all necessary input files, importing them to
+an input database,
+executing the run, and cleaning up temporary files and databases. The <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> method
+returns the results of the run in a Python list for easy inspection and
+manipulation.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">User Guide</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#design">Design</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="project.html"
+                        title="previous chapter">movespy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="movesinitializers.html"
+                        title="next chapter">Moves Class Initializer Parameters</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/docs.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="movesinitializers.html" title="Moves Class Initializer Parameters"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="movespy"
+             >previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Eric S. Talbot.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
