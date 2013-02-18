@@ -1,23 +1,19 @@
-movespy
+The movespy Manual
 ===================================
 
-Documentation
--------------
+
 
 .. toctree::
    :maxdepth: 2
    
-   The Project <project>
-   docs
+   intro
    movesinitializers
+   reference
    
 
 
 
-Reference
----------
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+
 

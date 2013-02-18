@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="movespy 0.1.0 documentation" href="index.html" />
-    <link rel="prev" title="movespy User Guide" href="docs.html" /> 
+    <link rel="prev" title="Introduction" href="intro.html" /> 
   </head>
   <body>
     <div class="related">
@@ -36,7 +36,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="docs.html" title="movespy User Guide"
+          <a href="intro.html" title="Introduction"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -49,14 +49,59 @@
             
   <div class="section" id="moves-class-initializer-parameters">
 <h1>Moves Class Initializer Parameters<a class="headerlink" href="#moves-class-initializer-parameters" title="Permalink to this headline">¶</a></h1>
-<p>Before you can run MOVES you need to construct the <cite>activity</cite> and <cite>options</cite> parameters
-for the Moves class initializer. Study this document to learn the structure for each.</p>
+<p>Before you can run MOVES you need to construct the <cite>&lt;activity&gt;</cite> and <cite>&lt;options&gt;</cite>
+parameters
+for the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> class initializer. Study this document to learn the structure for each.</p>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#minimal example using average speed</span>
+
+<span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
+             <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+             <span class="s">&#39;road_type&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+             <span class="s">&#39;source_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+             <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+             <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
+
+<span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
+             <span class="s">&#39;day_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+             <span class="s">&#39;hour&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+             <span class="s">&#39;month&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+             <span class="s">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2015</span><span class="p">,</span>
+             <span class="s">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;detail&#39;</span><span class="p">:</span> <span class="s">&#39;average&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#minimal example using operating mode distribution</span>
+
+<span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
+             <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+             <span class="s">&#39;opmode_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">11</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;road_type&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+             <span class="s">&#39;source_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+             <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+             <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
+
+<span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
+             <span class="s">&#39;day_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+             <span class="s">&#39;hour&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+             <span class="s">&#39;month&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+             <span class="s">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2015</span><span class="p">,</span>
+             <span class="s">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;detail&#39;</span><span class="p">:</span> <span class="s">&#39;opmode&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="specification">
 <h2>Specification<a class="headerlink" href="#specification" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>&lt;activity&gt;</dt>
-<dd><p class="first">A dictionary:</p>
-<div class="last highlight-python"><pre>{'county':&lt;county_id&gt;,
+<div class="section" id="activity">
+<h3>&lt;activity&gt;<a class="headerlink" href="#activity" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
+<div class="highlight-python"><pre>{'county':&lt;county_id&gt;,
  'year':&lt;year&gt;,
  'month':&lt;month&gt;,
  'hour':&lt;hour&gt;,
@@ -64,129 +109,173 @@ for the Moves class initializer. Study this document to learn the structure for 
  'age_distr':&lt;age_distr&gt;
  'links':&lt;links&gt;}</pre>
 </div>
-</dd>
-<dt>&lt;age_distr&gt;:</dt>
-<dd><p class="first">A dictionary:</p>
-<div class="last highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;,
- ...,
- &lt;source_type_id&gt;:&lt;source_type_age_distr&gt;}</pre>
+<p>This is the root level of the <cite>&lt;activity&gt;</cite> parameter.</p>
 </div>
-</dd>
-<dt>&lt;source_type_age_distr&gt;</dt>
-<dd><p class="first">A dictionary:</p>
-<div class="highlight-python"><pre>{&lt;age&gt;:&lt;proportion&gt;,
- ...,
- &lt;age&gt;:&lt;proportion&gt;}</pre>
+<div class="section" id="age">
+<h3>&lt;age&gt;<a class="headerlink" href="#age" title="Permalink to this headline">¶</a></h3>
+<p>An integer between 0 and 30. Zero means new, and 30
+means 30 years old.</p>
 </div>
-<p class="last">For keys not included, the proportion is assumed to be zero. Proportion
-values should sum to one.</p>
-</dd>
-<dt>&lt;links&gt;</dt>
-<dd><p class="first">A dictionary:</p>
-<div class="last highlight-python"><pre>{&lt;link_id&gt;:&lt;link&gt;,
+<div class="section" id="age-distr">
+<h3>&lt;age_distr&gt;<a class="headerlink" href="#age-distr" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
+<div class="highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;,
  ...,
- &lt;link_id&gt;:&lt;link&gt;}</pre>
+&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;}</pre>
 </div>
-</dd>
-<dt>&lt;link&gt;</dt>
-<dd><p class="first">A dictionary:</p>
-<div class="last highlight-python"><pre>{'road_type':&lt;road_type_id&gt;,
+</div>
+<div class="section" id="county-id">
+<h3>&lt;county_id&gt;<a class="headerlink" href="#county-id" title="Permalink to this headline">¶</a></h3>
+<p>An integer identifying the county. Find this in the county table of the MOVES database.</p>
+</div>
+<div class="section" id="day-type-id">
+<h3>&lt;day_type_id&gt;<a class="headerlink" href="#day-type-id" title="Permalink to this headline">¶</a></h3>
+<p>An integer for the day type. 5 for weekday, and 2 for weekend.</p>
+</div>
+<div class="section" id="detail">
+<h3>&lt;detail&gt;<a class="headerlink" href="#detail" title="Permalink to this headline">¶</a></h3>
+<p>Either <tt class="docutils literal"><span class="pre">'average'</span></tt> or <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.</p>
+</div>
+<div class="section" id="hour">
+<h3>&lt;hour&gt;<a class="headerlink" href="#hour" title="Permalink to this headline">¶</a></h3>
+<p>An integer for the hour (0 = midnight).</p>
+</div>
+<div class="section" id="length">
+<h3>&lt;length&gt;<a class="headerlink" href="#length" title="Permalink to this headline">¶</a></h3>
+<p>A real number giving the length of the link in miles. This value (in miles) should always
+be less than &lt;speed&gt; (in mph).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the value of <cite>&lt;length&gt;</cite> is greater than the value of <cite>&lt;speed&gt;</cite> the results will
+not be correct. A work-around is to adjust the values of <cite>&lt;length&gt;</cite> and <cite>&lt;volume&gt;</cite>
+so that their product remains constant and <cite>&lt;length&gt;</cite> is less than <cite>&lt;speed&gt;</cite>.</p>
+</div>
+</div>
+<div class="section" id="link">
+<h3>&lt;link&gt;<a class="headerlink" href="#link" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>A mapping:</p>
+<div class="highlight-python"><pre>{'road_type':&lt;road_type_id&gt;,
  'length':&lt;length&gt;,
  'volume':&lt;volume&gt;,
  'speed':&lt;speed&gt;,
  'grade':&lt;grade&gt;,
  'source_distr':&lt;source_distr&gt;,
- 'opmode_distr':&lt;opmode_distr&gt;}
-
-     The `'opmode_distr'` key and its value are only required if the value for
-     the `detail` key in the &lt;options&gt; dictionary is `'opmode'`.</pre>
+ 'opmode_distr':&lt;opmode_distr&gt;}</pre>
 </div>
-</dd>
-<dt>&lt;source_distr&gt;</dt>
-<dd><p class="first">A dictionary:</p>
+</div></blockquote>
+<p>The <tt class="docutils literal"><span class="pre">'opmode_distr'</span></tt> key and its value are only required if the value for
+the <tt class="docutils literal"><span class="pre">'detail'</span></tt> key in the <cite>&lt;options&gt;</cite> dictionary is <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.</p>
+</div>
+<div class="section" id="link-id">
+<h3>&lt;link_id&gt;<a class="headerlink" href="#link-id" title="Permalink to this headline">¶</a></h3>
+<p>An arbitrary positive integer identifying the link</p>
+</div>
+<div class="section" id="links">
+<h3>&lt;links&gt;<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
+<div class="highlight-python"><pre>{&lt;link_id&gt;:&lt;link&gt;,
+ ...,
+ &lt;link_id&gt;:&lt;link&gt;}</pre>
+</div>
+</div>
+<div class="section" id="month">
+<h3>&lt;month&gt;<a class="headerlink" href="#month" title="Permalink to this headline">¶</a></h3>
+<p>An integer for the month (1 = January).</p>
+</div>
+<div class="section" id="opmode-distr">
+<h3>&lt;opmode_distr&gt;<a class="headerlink" href="#opmode-distr" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
+<div class="highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;,
+ ...,
+ &lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;}</pre>
+</div>
+</div>
+<div class="section" id="opmode-id">
+<h3>&lt;opmode_id&gt;<a class="headerlink" href="#opmode-id" title="Permalink to this headline">¶</a></h3>
+<p>One of the following integers: 0,1,11,12,13,14,15,16,21,22,23,24,25,27,28,29,30,
+33,35,37,38,39,40,501.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Values of <cite>&lt;opmode_id&gt;</cite> must be calculated as by the <cite>getOpMode</cite> function in the
+movespy.trajectory module. Note in particular that when speed == 0.0 the opmode is
+always 501, regardless of the pollutant or process you may be interested in.</p>
+</div>
+</div>
+<div class="section" id="options">
+<h3>&lt;options&gt;<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
+<div class="highlight-python"><pre>{'detail':&lt;detail&gt;,
+ 'pollutants':&lt;pollutants&gt;}</pre>
+</div>
+<p>This is the root level of the <cite>&lt;options&gt;</cite> parameter. The <cite>&#8216;pollutants&#8217;</cite> key
+is optional. If it is not included then all pollutants
+will be calculated.</p>
+</div>
+<div class="section" id="pollutants">
+<h3>&lt;pollutants&gt;<a class="headerlink" href="#pollutants" title="Permalink to this headline">¶</a></h3>
+<p>A sequence of integers identifying pollutants to be calculated. Find these in the pollutant
+table in the MOVES database. If the list is empty, no pollutants will be calculated.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The calculation of many pollutants depends on
+the calculation of other pollutants. To get correct results, all dependencies must
+be included in this sequence. Dependencies are not documented yet (at least not here).
+To be safe,
+calculate all pollutants by not including the <tt class="docutils literal"><span class="pre">'pollutants'</span></tt> key in the <cite>&lt;options&gt;</cite>
+dictionary.</p>
+</div>
+</div>
+<div class="section" id="proportion">
+<h3>&lt;proportion&gt;<a class="headerlink" href="#proportion" title="Permalink to this headline">¶</a></h3>
+<p>A real number between 0 and 1.</p>
+</div>
+<div class="section" id="road-type">
+<h3>&lt;road_type&gt;<a class="headerlink" href="#road-type" title="Permalink to this headline">¶</a></h3>
+<p>An integer identifying the road type. Find this in the table roadtype in the MOVES database.
+Note that <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> currently support only on-road analysis.</p>
+</div>
+<div class="section" id="source-distr">
+<h3>&lt;source_distr&gt;<a class="headerlink" href="#source-distr" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
 <div class="highlight-python"><pre>{&lt;source_type_id&gt;:&lt;proportion&gt;,
  ...,
  &lt;source_type_id&gt;:&lt;proportion&gt;}</pre>
 </div>
-<p class="last">For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
-</dd>
-<dt>&lt;opmode_distr&gt;</dt>
-<dd><p class="first">A dictionary:</p>
-<div class="last highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;,
- ...,
- &lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;}</pre>
+<p>For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
 </div>
-</dd>
-<dt>&lt;source_type_opmode_distr&gt;</dt>
-<dd><div class="first highlight-python"><pre>{&lt;opmode_id&gt;:&lt;proportion&gt;,
+<div class="section" id="source-type-age-distr">
+<h3>&lt;source_type_age_distr&gt;<a class="headerlink" href="#source-type-age-distr" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
+<div class="highlight-python"><pre>{&lt;age&gt;:&lt;proportion&gt;,
+ ...,
+ &lt;age&gt;:&lt;proportion&gt;}</pre>
+</div>
+<p>For keys not included, the proportion is assumed to be zero. Proportion
+values should sum to one.</p>
+</div>
+<div class="section" id="source-type-id">
+<h3>&lt;source_type_id&gt;<a class="headerlink" href="#source-type-id" title="Permalink to this headline">¶</a></h3>
+<p>An integer identifying the source type. Find this in the sourceusetype table of the
+MOVES database.</p>
+</div>
+<div class="section" id="source-type-opmode-distr">
+<h3>&lt;source_type_opmode_distr&gt;<a class="headerlink" href="#source-type-opmode-distr" title="Permalink to this headline">¶</a></h3>
+<p>A mapping:</p>
+<div class="highlight-python"><pre>{&lt;opmode_id&gt;:&lt;proportion&gt;,
  ...,
  &lt;opmode_id&gt;:&lt;proportion&gt;}</pre>
 </div>
-<p class="last">For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
-</dd>
-<dt>&lt;options&gt;</dt>
-<dd><p class="first">A dictionary:</p>
-<div class="highlight-python"><pre>{'detail':&lt;detail&gt;,
- 'pollutants':&lt;pollutants&gt;}</pre>
+<p>For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
 </div>
-<p class="last">The <cite>&#8216;pollutants&#8217;</cite> key is optional. If it is not included, then all pollutants
-will be calculated.</p>
-</dd>
-<dt>&lt;county_id&gt;</dt>
-<dd>An integer identifying the county. Find this in the county table of the MOVES database.</dd>
-<dt>&lt;source_type_id&gt;:</dt>
-<dd>An integer identifying the source type. Find these in the sourceusetype table of the
-MOVES database.</dd>
-<dt>&lt;road_type&gt;</dt>
-<dd>An integer identifying the road type. Find this in the table road type in the MOVES database.</dd>
-<dt>&lt;month&gt;</dt>
-<dd>An integer for the month (1 = January).</dd>
-<dt>&lt;hour&gt;</dt>
-<dd>An integer for the hour (0 = midnight).</dd>
-<dt>&lt;day_type_id&gt;</dt>
-<dd>An integer for the day type. 5 for weekday, and 2 for weekend.</dd>
-<dt>&lt;proportion&gt;</dt>
-<dd>A float between 0 and 1.</dd>
-<dt>&lt;link_id&gt;</dt>
-<dd>An arbitrary positive integer identifying the link</dd>
-<dt>&lt;length&gt;</dt>
-<dd>A float giving the length of the link in miles. This value (in miles) should always
-be less than the speed (in mph).</dd>
-<dt>&lt;volume&gt;</dt>
-<dd>A float giving the volume in vehicles per hour.</dd>
-<dt>&lt;speed&gt;</dt>
-<dd>A float giving the average speed in miles per hour</dd>
-<dt>&lt;opmode_id&gt;</dt>
-<dd>One of the following integers: 0,1,11,12,13,14,15,16,21,22,23,24,25,27,28,29,30,
-33,35,37,38,39,40,501.</dd>
-<dt>&lt;detail&gt;</dt>
-<dd>One of &#8216;average&#8217; or &#8216;opmode&#8217;.</dd>
-<dt>&lt;pollutants&gt;:</dt>
-<dd>A list of integers identifying pollutants to be calculated. Find these in the pollutant table in the MOVES database. If the list is empty, no pollutants will be calculated.</dd>
-<dt>&lt;age&gt;:</dt>
-<dd>An integer between 0 and 30 (including end points). Zero means brand-new, and 30
-means 30 years old.</dd>
-</dl>
+<div class="section" id="speed">
+<h3>&lt;speed&gt;<a class="headerlink" href="#speed" title="Permalink to this headline">¶</a></h3>
+<p>A real number giving the average speed in miles per hour</p>
 </div>
-<div class="section" id="tips">
-<h2>Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>The values for &lt;county&gt;, &lt;day_type&gt;, &lt;source_type_id&gt;, &lt;road_type&gt;, &lt;day_type_id&gt;,
-&lt;opmode_id&gt; and &lt;pollutants&gt; are IDs from the MOVES database. You can find these
-values by browsing the database or in the MOVES documentation.</li>
-<li>The value of &lt;link_id&gt; should not be zero or negative.</li>
-<li>The calculation of many pollutants depends on
-the calculation of other pollutants. To get correct results, all dependencies must
-be included in this list. Dependencies are not documented yet (at least here). To be safe,
-calculate all pollutants by not including the <cite>&#8216;pollutants&#8217;</cite> key in the &lt;options&gt;
-dictionary.</li>
-<li>Values of &lt;opmode_id&gt; must be calculated as by the <cite>getOpMode</cite> function in the
-movespy.trajectory module. Note in particular that when speed == 0.0 the opmode is
-always 501, regardless of the pollutant or process you may be interested in.</li>
-<li>If the value of &lt;length&gt; is greater than the value of &lt;speed&gt; the results will
-not be correct. A work around is to adjust the values of &lt;length&gt; and &lt;volume&gt;
-so that their product remains constant and &lt;length&gt; is less than &lt;speed&gt;.</li>
-</ul>
+<div class="section" id="volume">
+<h3>&lt;volume&gt;<a class="headerlink" href="#volume" title="Permalink to this headline">¶</a></h3>
+<p>A real number giving the volume in vehicles per hour.</p>
+</div>
 </div>
 </div>
 
@@ -199,15 +288,41 @@ so that their product remains constant and &lt;length&gt; is less than &lt;speed
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Moves Class Initializer Parameters</a><ul>
-<li><a class="reference internal" href="#specification">Specification</a></li>
-<li><a class="reference internal" href="#tips">Tips</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#specification">Specification</a><ul>
+<li><a class="reference internal" href="#activity">&lt;activity&gt;</a></li>
+<li><a class="reference internal" href="#age">&lt;age&gt;</a></li>
+<li><a class="reference internal" href="#age-distr">&lt;age_distr&gt;</a></li>
+<li><a class="reference internal" href="#county-id">&lt;county_id&gt;</a></li>
+<li><a class="reference internal" href="#day-type-id">&lt;day_type_id&gt;</a></li>
+<li><a class="reference internal" href="#detail">&lt;detail&gt;</a></li>
+<li><a class="reference internal" href="#hour">&lt;hour&gt;</a></li>
+<li><a class="reference internal" href="#length">&lt;length&gt;</a></li>
+<li><a class="reference internal" href="#link">&lt;link&gt;</a></li>
+<li><a class="reference internal" href="#link-id">&lt;link_id&gt;</a></li>
+<li><a class="reference internal" href="#links">&lt;links&gt;</a></li>
+<li><a class="reference internal" href="#month">&lt;month&gt;</a></li>
+<li><a class="reference internal" href="#opmode-distr">&lt;opmode_distr&gt;</a></li>
+<li><a class="reference internal" href="#opmode-id">&lt;opmode_id&gt;</a></li>
+<li><a class="reference internal" href="#options">&lt;options&gt;</a></li>
+<li><a class="reference internal" href="#pollutants">&lt;pollutants&gt;</a></li>
+<li><a class="reference internal" href="#proportion">&lt;proportion&gt;</a></li>
+<li><a class="reference internal" href="#road-type">&lt;road_type&gt;</a></li>
+<li><a class="reference internal" href="#source-distr">&lt;source_distr&gt;</a></li>
+<li><a class="reference internal" href="#source-type-age-distr">&lt;source_type_age_distr&gt;</a></li>
+<li><a class="reference internal" href="#source-type-id">&lt;source_type_id&gt;</a></li>
+<li><a class="reference internal" href="#source-type-opmode-distr">&lt;source_type_opmode_distr&gt;</a></li>
+<li><a class="reference internal" href="#speed">&lt;speed&gt;</a></li>
+<li><a class="reference internal" href="#volume">&lt;volume&gt;</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="docs.html"
-                        title="previous chapter">movespy User Guide</a></p>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/movesinitializers.txt"
@@ -237,7 +352,7 @@ so that their product remains constant and &lt;length&gt; is less than &lt;speed
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="docs.html" title="movespy User Guide"
+          <a href="intro.html" title="Introduction"
              >previous</a> |</li>
         <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>

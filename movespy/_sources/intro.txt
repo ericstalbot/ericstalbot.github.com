@@ -1,6 +1,3 @@
-##################
-The movespy Manual
-##################
 
 ============
 Introduction
@@ -36,8 +33,6 @@ returns the results of the run in a Python list for easy inspection and
 manipulation.
 
 
-
-.. include:: movesinitializers.rst
 
 
 
