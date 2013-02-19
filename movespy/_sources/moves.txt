@@ -1,6 +1,0 @@
-movespy.moves Module
-====================
-
-.. automodule:: movespy.moves
-  :members:
-  :special-members: __init__

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The movespy Manual &mdash; movespy 0.1.0 documentation</title>
+    <title>movespy 0.1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,20 +25,13 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="movespy 0.1.0 documentation" href="#" />
-    <link rel="next" title="Introduction" href="intro.html" /> 
+    <link rel="top" title="None" href="index.html#document-index" /> 
   </head>
   <body>
     <div class="related">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="intro.html" title="Introduction"
-             accesskey="N">next</a> |</li>
-        <li><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html#document-index">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,18 +43,229 @@
   <div class="section" id="the-movespy-manual">
 <h1>The movespy Manual<a class="headerlink" href="#the-movespy-manual" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="intro.html#design">Design</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="movesinitializers.html">Moves Class Initializer Parameters</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="movesinitializers.html#examples">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="movesinitializers.html#specification">Specification</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
-</ul>
+<span id="document-docs"></span><div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>MOVES is a software package developed by the US EPA for estimating pollution
+from cars. MOVES is a valuable resource for analysts because it is based
+upon substantial and rigourous research. Some analysts may even be required
+to use MOVES because it is mandatory for certain analyses linked to federal
+transportation funding.
+Unfortunately, using MOVES is sometimes tedious. In typical usage analysts must construct
+and maintain several
+input tables, then configure and launch the MOVES run using a series of menu options,
+forms, and mouse clicks. The cost of running MOVES discourages exploratory analysis or
+any type of analysis that requires more than a few runs.
+movespy aims to make using MOVES easier by making it easy to
+write programs to automate MOVES runs and retrieve the results.</p>
+<p>Currently movespy focuses on project-level on-road analyses. In the future
+movespy may also focus on county-level or off-road analyses.</p>
+<div class="section" id="design">
+<h3>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h3>
+<p>The core component of movespy is the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> class. Instances of the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt>
+class are initialized with activity and options parameters which completely
+specify a MOVES run. Calling the <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> method of a <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> instance executes a
+complete MOVES run, including creating all necessary input files, importing them to
+an input database,
+executing the run, and cleaning up temporary files and databases. The <tt class="xref py py-meth docutils literal"><span class="pre">run()</span></tt> method
+returns the results of the run in a Python list for easy inspection and
+manipulation.</p>
+</div>
+</div>
+<div class="section" id="moves-class-initializer-parameters">
+<h2>Moves Class Initializer Parameters<a class="headerlink" href="#moves-class-initializer-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Before you can run MOVES you need to construct the <cite>&lt;activity&gt;</cite> and <cite>&lt;options&gt;</cite>
+parameters
+for the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> class initializer. Study this document to learn the structure for each.</p>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#minimal example using average speed</span>
+
+<span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
+             <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+             <span class="s">&#39;road_type&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+             <span class="s">&#39;source_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+             <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+             <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
+
+<span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
+             <span class="s">&#39;day_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+             <span class="s">&#39;hour&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+             <span class="s">&#39;month&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+             <span class="s">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2015</span><span class="p">,</span>
+             <span class="s">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;detail&#39;</span><span class="p">:</span> <span class="s">&#39;average&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#minimal example using operating mode distribution</span>
+
+<span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
+             <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+             <span class="s">&#39;opmode_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">11</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;road_type&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+             <span class="s">&#39;source_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+             <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+             <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
+
+<span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
+             <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
+             <span class="s">&#39;day_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+             <span class="s">&#39;hour&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+             <span class="s">&#39;month&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+             <span class="s">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2015</span><span class="p">,</span>
+             <span class="s">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;detail&#39;</span><span class="p">:</span> <span class="s">&#39;opmode&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="specification">
+<h3>Specification<a class="headerlink" href="#specification" title="Permalink to this headline">¶</a></h3>
+<dl class="glossary docutils">
+<dt id="term-activity">&lt;activity&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="highlight-python"><pre>{'county':&lt;county_id&gt;,
+ 'year':&lt;year&gt;,
+ 'month':&lt;month&gt;,
+ 'hour':&lt;hour&gt;,
+ 'day_type':&lt;day_type_id&gt;,
+ 'age_distr':&lt;age_distr&gt;
+ 'links':&lt;links&gt;}</pre>
+</div>
+<p class="last">This is the root level of the <cite>&lt;activity&gt;</cite> parameter.</p>
+</dd>
+<dt id="term-age">&lt;age&gt;</dt>
+<dd>An integer between 0 and 30. Zero means new, and 30
+means 30 years old.</dd>
+<dt id="term-age-distr">&lt;age_distr&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="last highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;,
+ ...,
+&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;}</pre>
+</div>
+</dd>
+<dt id="term-county-id">&lt;county_id&gt;</dt>
+<dd>An integer identifying the county. Find this in the county table of the MOVES database.</dd>
+<dt id="term-day-type-id">&lt;day_type_id&gt;</dt>
+<dd>An integer for the day type. 5 for weekday, and 2 for weekend.</dd>
+<dt id="term-detail">&lt;detail&gt;</dt>
+<dd>Either <tt class="docutils literal"><span class="pre">'average'</span></tt> or <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.</dd>
+<dt id="term-hour">&lt;hour&gt;</dt>
+<dd>An integer for the hour (0 = midnight).</dd>
+<dt id="term-length">&lt;length&gt;</dt>
+<dd><p class="first">A real number giving the length of the link in miles. This value (in miles) should always
+be less than &lt;speed&gt; (in mph).</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the value of <cite>&lt;length&gt;</cite> is greater than the value of <cite>&lt;speed&gt;</cite> the results will
+not be correct. A work-around is to adjust the values of <cite>&lt;length&gt;</cite> and <cite>&lt;volume&gt;</cite>
+so that their product remains constant and <cite>&lt;length&gt;</cite> is less than <cite>&lt;speed&gt;</cite>.</p>
+</div>
+</dd>
+<dt id="term-link">&lt;link&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="highlight-python"><pre>{'road_type':&lt;road_type_id&gt;,
+ 'length':&lt;length&gt;,
+ 'volume':&lt;volume&gt;,
+ 'speed':&lt;speed&gt;,
+ 'grade':&lt;grade&gt;,
+ 'source_distr':&lt;source_distr&gt;,
+ 'opmode_distr':&lt;opmode_distr&gt;}</pre>
+</div>
+<p class="last">The <tt class="docutils literal"><span class="pre">'opmode_distr'</span></tt> key and its value are only required if the value for
+the <tt class="docutils literal"><span class="pre">'detail'</span></tt> key in the <cite>&lt;options&gt;</cite> dictionary is <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.</p>
+</dd>
+<dt id="term-link-id">&lt;link_id&gt;</dt>
+<dd>An arbitrary positive integer identifying the link</dd>
+<dt id="term-links">&lt;links&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="last highlight-python"><pre>{&lt;link_id&gt;:&lt;link&gt;,
+ ...,
+ &lt;link_id&gt;:&lt;link&gt;}</pre>
+</div>
+</dd>
+<dt id="term-month">&lt;month&gt;</dt>
+<dd>An integer for the month (1 = January).</dd>
+<dt id="term-opmode-distr">&lt;opmode_distr&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="last highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;,
+ ...,
+ &lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;}</pre>
+</div>
+</dd>
+<dt id="term-opmode-id">&lt;opmode_id&gt;</dt>
+<dd><p class="first">One of the following integers: 0,1,11,12,13,14,15,16,21,22,23,24,25,27,28,29,30,
+33,35,37,38,39,40,501.</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Values of <cite>&lt;opmode_id&gt;</cite> must be calculated as by the <cite>getOpMode</cite> function in the
+movespy.trajectory module. Note in particular that when speed == 0.0 the opmode is
+always 501, regardless of the pollutant or process you may be interested in.</p>
+</div>
+</dd>
+<dt id="term-options">&lt;options&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="highlight-python"><pre>{'detail':&lt;detail&gt;,
+ 'pollutants':&lt;pollutants&gt;}</pre>
+</div>
+<p class="last">This is the root level of the <cite>&lt;options&gt;</cite> parameter. The <cite>&#8216;pollutants&#8217;</cite> key
+is optional. If it is not included then all pollutants
+will be calculated.</p>
+</dd>
+<dt id="term-pollutants">&lt;pollutants&gt;</dt>
+<dd><p class="first">A sequence of integers identifying pollutants to be calculated. Find these in the pollutant
+table in the MOVES database. If the list is empty, no pollutants will be calculated.</p>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The calculation of many pollutants depends on
+the calculation of other pollutants. To get correct results, all dependencies must
+be included in this sequence. Dependencies are not documented yet (at least not here).
+To be safe,
+calculate all pollutants by not including the <tt class="docutils literal"><span class="pre">'pollutants'</span></tt> key in the <cite>&lt;options&gt;</cite>
+dictionary.</p>
+</div>
+</dd>
+<dt id="term-proportion">&lt;proportion&gt;</dt>
+<dd>A real number between 0 and 1.</dd>
+<dt id="term-road-type">&lt;road_type&gt;</dt>
+<dd>An integer identifying the road type. Find this in the table roadtype in the MOVES database.
+Note that <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> currently support only on-road analysis.</dd>
+<dt id="term-source-distr">&lt;source_distr&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="highlight-python"><pre>{&lt;source_type_id&gt;:&lt;proportion&gt;,
+ ...,
+ &lt;source_type_id&gt;:&lt;proportion&gt;}</pre>
+</div>
+<p class="last">For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
+</dd>
+<dt id="term-source-type-age-distr">&lt;source_type_age_distr&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="highlight-python"><pre>{&lt;age&gt;:&lt;proportion&gt;,
+ ...,
+ &lt;age&gt;:&lt;proportion&gt;}</pre>
+</div>
+<p class="last">For keys not included, the proportion is assumed to be zero. Proportion
+values should sum to one.</p>
+</dd>
+<dt id="term-source-type-id">&lt;source_type_id&gt;</dt>
+<dd>An integer identifying the source type. Find this in the sourceusetype table of the
+MOVES database.</dd>
+<dt id="term-source-type-opmode-distr">&lt;source_type_opmode_distr&gt;</dt>
+<dd><p class="first">A mapping:</p>
+<div class="highlight-python"><pre>{&lt;opmode_id&gt;:&lt;proportion&gt;,
+ ...,
+ &lt;opmode_id&gt;:&lt;proportion&gt;}</pre>
+</div>
+<p class="last">For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
+</dd>
+<dt id="term-speed">&lt;speed&gt;</dt>
+<dd>A real number giving the average speed in miles per hour</dd>
+<dt id="term-volume">&lt;volume&gt;</dt>
+<dd>A real number giving the volume in vehicles per hour.</dd>
+</dl>
+</div>
+</div>
 </div>
 </div>
 
@@ -71,14 +275,19 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h4>Next topic</h4>
-  <p class="topless"><a href="intro.html"
-                        title="next chapter">Introduction</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
+  <h3><a href="index.html#document-index">Table Of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-docs">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#design">Design</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#moves-class-initializer-parameters">Moves Class Initializer Parameters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#specification">Specification</a></li>
+</ul>
+</li>
+</ul>
+
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -99,13 +308,7 @@
     <div class="related">
       <h3>Navigation</h3>
       <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="intro.html" title="Introduction"
-             >next</a> |</li>
-        <li><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html#document-index">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
