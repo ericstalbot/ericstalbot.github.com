@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -14,7 +13,7 @@
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '0.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -215,6 +214,14 @@ means 30 years old.</dd>
 &lt;source_type_id&gt;:&lt;source_type_age_distr&gt;}</pre>
 </div>
 </dd>
+<dt id="term-breakdown-selection">&lt;breakdown_selection&gt;</dt>
+<dd>One of <cite>&#8216;model_year&#8217;</cite>, <cite>&#8216;fuel&#8217;</cite>, <cite>&#8216;process&#8217;</cite>, or <cite>&#8216;source&#8217;</cite>.</dd>
+<dt id="term-breakdown-selections">&lt;breakdown_selections&gt;</dt>
+<dd><p class="first">An iterable:</p>
+<div class="highlight-python"><pre>[&lt;breakdown_selection&gt;, ...]</pre>
+</div>
+<p class="last">Specifies by which fields the output should be disaggregated.</p>
+</dd>
 <dt id="term-county-id">&lt;county_id&gt;</dt>
 <dd>An integer identifying the county. Find this in the county table of the MOVES database.</dd>
 <dt id="term-day-type-id">&lt;day_type_id&gt;</dt>
@@ -277,11 +284,14 @@ always 501, regardless of the pollutant or process you may be interested in.</p>
 <dt id="term-options">&lt;options&gt;</dt>
 <dd><p class="first">A mapping:</p>
 <div class="highlight-python"><pre>{'detail':&lt;detail&gt;,
- 'pollutants':&lt;pollutants&gt;}</pre>
+ 'pollutants':&lt;pollutants&gt;,
+ 'breakdown':&lt;breakdown_selections&gt;}</pre>
 </div>
 <p class="last">This is the root level of the <cite>&lt;options&gt;</cite> parameter. The <cite>&#8216;pollutants&#8217;</cite> key
 is optional. If it is not included then all pollutants
-will be calculated.</p>
+will be calculated. The <cite>&#8216;breakdown&#8217;</cite> key
+is optional. If it is not included the output will be disaggregated by link and pollutant
+only.</p>
 </dd>
 <dt id="term-pollutants">&lt;pollutants&gt;</dt>
 <dd><p class="first">A sequence of integers identifying pollutants to be calculated. Find these in the pollutant
@@ -508,7 +518,7 @@ our inputs:</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, Eric S. Talbot.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>
