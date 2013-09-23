@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The movespy Manual &mdash; movespy 0.1.0 documentation</title>
+    <title>Introduction &mdash; movespy 0.1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -24,7 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="movespy 0.1.0 documentation" href="#" /> 
+    <link rel="top" title="movespy 0.1.0 documentation" href="index.html" />
+    <link rel="prev" title="The movespy Manual" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -33,7 +34,10 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="index.html" title="The movespy Manual"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -42,10 +46,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="the-movespy-manual">
-<h1>The movespy Manual<a class="headerlink" href="#the-movespy-manual" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>MOVES is a software package developed by the US EPA for estimating pollution
 from cars. MOVES is a valuable resource for analysts because it is based
 upon substantial and rigorous research. Some analysts may even be required
@@ -59,16 +61,16 @@ write programs to automate MOVES runs and retrieve the results.</p>
 <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> may also focus on county-level or off-road analysis.</p>
 </div>
 <div class="section" id="installing-and-learning-python">
-<h3>Installing and learning Python<a class="headerlink" href="#installing-and-learning-python" title="Permalink to this headline">¶</a></h3>
+<h2>Installing and learning Python<a class="headerlink" href="#installing-and-learning-python" title="Permalink to this headline">¶</a></h2>
 <p><tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> is implemented as a Python package. To use <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> effectively you should know at least a little about Python. But don&#8217;t worry: Python is easy to learn. And once you know it there&#8217;s a lot you can do with it (not just <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt>). To download Python go to <a class="reference external" href="http://python.org/">python.org</a>. To learn Python, try one of the many good <a class="reference external" href="http://www.google.com/search?q=python+tutorial">Python tutorials</a> online.</p>
 </div>
 <div class="section" id="installing-moves">
-<h3>Installing MOVES<a class="headerlink" href="#installing-moves" title="Permalink to this headline">¶</a></h3>
+<h2>Installing MOVES<a class="headerlink" href="#installing-moves" title="Permalink to this headline">¶</a></h2>
 <p><tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> works by interacting with MOVES, so you&#8217;ll need to install MOVES on your computer. To download MOVES go to the EPA&#8217;s <a class="reference external" href="http://www.epa.gov/otaq/models/moves/index.htm">MOVES webpage</a>.</p>
 <p>When you install moves, make a note of the folder where you put it. You&#8217;ll need that to install <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt>.</p>
 </div>
 <div class="section" id="installing-movespy">
-<h3>Installing <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt><a class="headerlink" href="#installing-movespy" title="Permalink to this headline">¶</a></h3>
+<h2>Installing <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt><a class="headerlink" href="#installing-movespy" title="Permalink to this headline">¶</a></h2>
 <p>Download the <a class="reference external" href="https://pypi.python.org/pypi/movespy">installer</a> and run it.</p>
 <p>Next, open the <tt class="docutils literal"><span class="pre">movespy_settings.py</span></tt> module in the <tt class="docutils literal"><span class="pre">movespy</span></tt> folder. You
 should see something like this:</p>
@@ -86,14 +88,14 @@ lower case, and &#8220;db&#8221; inserted after &#8220;moves&#8221; and before t
 you&#8217;ve make your edits, make sure to save the file.</p>
 </div>
 <div class="section" id="getting-help">
-<h3>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
+<h2>Getting Help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
 <p>If you need help with movespy, please email Eric.</p>
 </div>
 </div>
 <div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="using-movespy-to-run-moves">
-<h3>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to run MOVES<a class="headerlink" href="#using-movespy-to-run-moves" title="Permalink to this headline">¶</a></h3>
+<h2>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to run MOVES<a class="headerlink" href="#using-movespy-to-run-moves" title="Permalink to this headline">¶</a></h2>
 <p>Let&#8217;s say we would like to estimate emissions for vehicle traffic on a single link. First some details about the link:</p>
 <blockquote>
 <div><ul class="simple">
@@ -174,7 +176,7 @@ data for values, like so:</p>
 </div>
 </div>
 <div class="section" id="using-movespy-to-calculate-vsp-and-operating-mode">
-<h3>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to calculate VSP and Operating Mode<a class="headerlink" href="#using-movespy-to-calculate-vsp-and-operating-mode" title="Permalink to this headline">¶</a></h3>
+<h2>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to calculate VSP and Operating Mode<a class="headerlink" href="#using-movespy-to-calculate-vsp-and-operating-mode" title="Permalink to this headline">¶</a></h2>
 <p>We have a vehicle trajectory
 dataset produced by a traffic microsimulation. The data set looks like this:</p>
 <table border="1" class="docutils">
@@ -288,7 +290,7 @@ our inputs:</p>
 </div>
 </div>
 <div class="section" id="using-movespy-to-generate-emission-rate-look-up-tables">
-<h3>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to Generate Emission Rate Look-up Tables<a class="headerlink" href="#using-movespy-to-generate-emission-rate-look-up-tables" title="Permalink to this headline">¶</a></h3>
+<h2>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to Generate Emission Rate Look-up Tables<a class="headerlink" href="#using-movespy-to-generate-emission-rate-look-up-tables" title="Permalink to this headline">¶</a></h2>
 <p>To generate a look-up table of emissions rates, you will need to provide an activity argument that is similar
 to the activity argument for the movespy.moves.Moves initializer, except that it does not include
 the &#8216;links&#8217; key/value pair. For example:</p>
@@ -347,7 +349,7 @@ values are emissions rates in either grams or kJ per vehicle-hour. For example:<
 </div>
 </div>
 <div class="section" id="moves-class-initializer-parameters">
-<h2>Moves Class Initializer Parameters<a class="headerlink" href="#moves-class-initializer-parameters" title="Permalink to this headline">¶</a></h2>
+<h1>Moves Class Initializer Parameters<a class="headerlink" href="#moves-class-initializer-parameters" title="Permalink to this headline">¶</a></h1>
 <p>Before you can run MOVES you need to construct the <cite>&lt;activity&gt;</cite> and <cite>&lt;options&gt;</cite>
 parameters
 for the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> class initializer. Study this section to learn the structure for each.</p>
@@ -505,7 +507,6 @@ MOVES database.</dd>
 <dd>A real number giving the volume in vehicles per hour.</dd>
 </dl>
 </div>
-</div>
 
 
           </div>
@@ -513,10 +514,9 @@ MOVES database.</dd>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">The movespy Manual</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#installing-and-learning-python">Installing and learning Python</a></li>
 <li><a class="reference internal" href="#installing-moves">Installing MOVES</a></li>
 <li><a class="reference internal" href="#installing-movespy">Installing <tt class="docutils literal"><span class="pre">movespy</span></tt></a></li>
@@ -531,12 +531,13 @@ MOVES database.</dd>
 </li>
 <li><a class="reference internal" href="#moves-class-initializer-parameters">Moves Class Initializer Parameters</a></li>
 </ul>
-</li>
-</ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">The movespy Manual</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
+    <li><a href="_sources/docs.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -562,7 +563,10 @@ MOVES database.</dd>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
+        <li class="right" >
+          <a href="index.html" title="The movespy Manual"
+             >previous</a> |</li>
+        <li><a href="index.html">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
