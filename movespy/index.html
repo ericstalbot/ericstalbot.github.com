@@ -145,16 +145,16 @@ data for values, like so:</p>
 </div>
 <p>This kicks-off the MOVES run. When the run is done, the results are returned and assigned to the <cite>emissions_out</cite> variable. Now we can inspect the results. Let&#8217;s say we want to know the total carbon monoxide emissions. We can type:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># 2 is the ID for carbon monoxide</span>
-<span class="n">total_CO</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">row</span><span class="o">.</span><span class="n">quantity</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">emissions_out</span> <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">pollutant</span> <span class="o">==</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">total_CO</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;quantity&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">emissions_out</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;pollutant&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Putting it all together, our entire script for this analysis would be:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
-             <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
-             <span class="s">&#39;road_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-             <span class="s">&#39;source_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
-             <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
-             <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
+            <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+            <span class="s">&#39;road_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s">&#39;source_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+            <span class="s">&#39;speed&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+            <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
 
 <span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
              <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
@@ -168,8 +168,8 @@ data for values, like so:</p>
 
 <span class="kn">import</span> <span class="nn">movespy.moves</span>
 <span class="n">moves</span> <span class="o">=</span> <span class="n">movespy</span><span class="o">.</span><span class="n">moves</span><span class="o">.</span><span class="n">Moves</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-<span class="n">emissions_out</span><span class="p">,</span> <span class="n">activity_out</span> <span class="o">=</span> <span class="n">moves</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-<span class="n">total_CO</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">row</span><span class="o">.</span><span class="n">quantity</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">emissions_out</span> <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">pollutant</span> <span class="o">==</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">emissions_out</span> <span class="o">=</span> <span class="n">moves</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">total_CO</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;quantity&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">emissions_out</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;pollutant&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -292,8 +292,7 @@ our inputs:</p>
 <p>To generate a look-up table of emissions rates, you will need to provide an activity argument that is similar
 to the activity argument for the <tt class="xref py py-class docutils literal"><span class="pre">movespy.moves.Moves</span></tt> initializer, except that it does not include
 the &#8216;links&#8217; key/value pair. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">41</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">43</span><span class="p">,</span><span class="mi">51</span><span class="p">,</span><span class="mi">52</span><span class="p">,</span><span class="mi">53</span><span class="p">,</span><span class="mi">54</span><span class="p">,</span><span class="mi">61</span><span class="p">,</span><span class="mi">62</span><span class="p">),</span>
-                                    <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}),</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">11</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span> <span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
              <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
              <span class="s">&#39;day_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
              <span class="s">&#39;hour&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
@@ -307,32 +306,18 @@ in the year 2015. To generate the look up table we first import the <tt class="x
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">movespy.ratetable</span>
 </pre></div>
 </div>
-<p>Then we run the <tt class="xref py py-func docutils literal"><span class="pre">movespy.ratetable.getRateTable()</span></tt> function, with our activity dictionary as the argument:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">table</span> <span class="o">=</span> <span class="n">movespy</span><span class="o">.</span><span class="n">ratetable</span><span class="o">.</span><span class="n">getRateTable</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
+<p>Then we run the <tt class="xref py py-func docutils literal"><span class="pre">movespy.ratetable.getRateTable()</span></tt> function, with our activity dictionary as the argument. We also limit the table to include only two operating modes and two source types. We also
+provide an empty options dictionary:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">table</span> <span class="o">=</span> <span class="n">movespy</span><span class="o">.</span><span class="n">ratetable</span><span class="o">.</span><span class="n">getRateTable</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span>
+                                       <span class="p">{},</span>
+                                       <span class="n">operating_mode_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                       <span class="n">source_type_ids</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">21</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>The result is a nested dict with keys for pollutant, source type, and operating mode. The
-values are emissions rates in either grams or kJ per vehicle-hour. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">table</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">21</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
-<span class="go">123.456</span>
-</pre></div>
-</div>
+<p>The result is a list of dictionaries. Each dict has keys for pollutant, source, opmode and quantity. The
+quantity values are emissions rates in either grams or kJ per vehicle-hour.</p>
 <p>If you want to create a flat file look up table, you could do:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;pollutant&#39;</span><span class="p">,</span> <span class="s">&#39;source_type&#39;</span><span class="p">,</span> <span class="s">&#39;op_mode&#39;</span><span class="p">,</span> <span class="s">&#39;rate&#39;</span><span class="p">]</span>
-
-<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">pollutant</span> <span class="ow">in</span> <span class="n">table</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">source_type</span> <span class="ow">in</span> <span class="n">table</span><span class="p">[</span><span class="n">pollutant</span><span class="p">]:</span>
-        <span class="k">for</span> <span class="n">op_mode</span> <span class="ow">in</span> <span class="n">table</span><span class="p">[</span><span class="n">pollutant</span><span class="p">][</span><span class="n">source_type</span><span class="p">]:</span>
-
-            <span class="n">rate</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">pollutant</span><span class="p">][</span><span class="n">source_type</span><span class="p">][</span><span class="n">op_mode</span><span class="p">]</span>
-
-            <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">pollutant</span> <span class="o">=</span> <span class="n">pollutant</span><span class="p">,</span>
-                             <span class="n">source_type</span> <span class="o">=</span> <span class="n">source_type</span><span class="p">,</span>
-                             <span class="n">op_mode</span> <span class="o">=</span> <span class="n">op_mode</span><span class="p">,</span>
-                             <span class="n">rate</span> <span class="o">=</span> <span class="n">rate</span><span class="p">))</span>
-
+<div class="highlight-python"><div class="highlight"><pre><span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;pollutant&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;opmode&#39;</span><span class="p">,</span> <span class="s">&#39;quantity&#39;</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;table.csv&#39;</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -341,7 +326,7 @@ values are emissions rates in either grams or kJ per vehicle-hour. For example:<
 
     <span class="n">d</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
 
-    <span class="n">d</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
