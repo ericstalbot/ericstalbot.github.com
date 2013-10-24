@@ -387,7 +387,11 @@ means 30 years old.</dd>
 <dt id="term-day-type-id">&lt;day_type_id&gt;</dt>
 <dd>An integer for the day type. 5 for weekday, and 2 for weekend.</dd>
 <dt id="term-detail">&lt;detail&gt;</dt>
-<dd>Either <tt class="docutils literal"><span class="pre">'average'</span></tt> or <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.</dd>
+<dd>One of <tt class="docutils literal"><span class="pre">'average'</span></tt>, <tt class="docutils literal"><span class="pre">'opmode'</span></tt>, or <tt class="docutils literal"><span class="pre">'driveschedule'</span></tt>.</dd>
+<dt id="term-driveschedule">&lt;driveschedule&gt;</dt>
+<dd>A sequence of tuples. Each tuple contains two items: Speed in miles per hour (a float),
+and grade in percent (a float). Represents a vehicle trajectory. Must be sorted by time, and
+observations must be one second apart.</dd>
 <dt id="term-hour">&lt;hour&gt;</dt>
 <dd>An integer for the hour (0 = midnight).</dd>
 <dt id="term-length">&lt;length&gt;</dt>
@@ -408,10 +412,13 @@ so that their product remains constant and <cite>&lt;length&gt;</cite> is less t
  'speed':&lt;speed&gt;,
  'grade':&lt;grade&gt;,
  'source_distr':&lt;source_distr&gt;,
- 'opmode_distr':&lt;opmode_distr&gt;}</pre>
+ 'opmode_distr':&lt;opmode_distr&gt;,
+ 'driveschedule':&lt;driveschedule&gt;}</pre>
 </div>
 <p class="last">The <tt class="docutils literal"><span class="pre">'opmode_distr'</span></tt> key and its value are only required if the value for
-the <tt class="docutils literal"><span class="pre">'detail'</span></tt> key in the <cite>&lt;options&gt;</cite> dictionary is <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.</p>
+the <tt class="docutils literal"><span class="pre">'detail'</span></tt> key in the <cite>&lt;options&gt;</cite> dictionary is <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.
+The <tt class="docutils literal"><span class="pre">'driveschedule'</span></tt> key and its value are only required if the value for
+the <tt class="docutils literal"><span class="pre">'detail'</span></tt> key in the <cite>&lt;options&gt;</cite> dictionary is <tt class="docutils literal"><span class="pre">'driveschedule'</span></tt>.</p>
 </dd>
 <dt id="term-link-id">&lt;link_id&gt;</dt>
 <dd>An arbitrary positive integer identifying the link</dd>
