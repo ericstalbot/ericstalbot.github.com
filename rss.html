@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Eric S. Talbot</title>
+        <link>http://ericstalbot.github.io/</link>
+        <description></description>
+        <language>en-us</language>
+        <pubDate>Fri, 06 Dec 2013 00:00:00 -0500</pubDate>
+        
+        <item>
+            <link>http://ericstalbot.github.io/2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html</link>
+            <guid>http://ericstalbot.github.io/2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html</guid>
+            <title><![CDATA[Bluetooth Vehicle Tracking:  Correcting Short Trip Bias]]></title>
+            <description><![CDATA[<div class="section" id="bluetooth-vehicle-tracking-correcting-short-trip-bias">
+<h1>Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</h1>
+<p>A new thing in transportation analysis is the use of arrays of Bluetooth detectors
+to track cars. The detectors work by recording the MAC IDs of wireless devices inside cars that
+pass nearby. By linking together multiple detections of the same MAC ID across different detectors,
+you can make a pretty good guess at the starting point, ending point, and route taken for a trip.</p>
+<p>There is one problem, however. Detectors can “miss” cars: even though a car has a wireless device
+inside, and it passes near a detector, the detector may fail to detect it. This has the effect of
+making some trips appear shorter than they really are. Take for example a car that passes near detectors
+1, 2, and 3. If detector 1 misses the car, the trip will appear to have passed by only
+detectors 2 and 3.</p>
+<p>To fix this problem, I’ve proposed an estimation method that explicitly accounts for missed
+detections. My tests show improvements over a naive method that ignores missed detections:</p>
+<a class="reference internal image-reference" href="http://ericstalbot.github.io/_images/naive.png"><img alt="../../../_images/naive.png" src="http://ericstalbot.github.io/_images/naive.png" style="width: 600px;"/></a>
+<p>See my <a class="reference external" href="http://ericstalbot.github.io/bluetooth/TalbotBluetooth.pdf">paper</a> and IPython <a class="reference external" href="http://ericstalbot.github.io/bluetooth/RouteFlowsRoadsideDetectors-v2.html">notebook</a> for details on the estimation method.</p>
+</div>]]></description>
+             <pubDate>Fri, 06 Dec 2013 00:00:00 -0500</pubDate>
+        </item>
+    
+    </channel>
+</rss>

@@ -15,7 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Home &mdash; Eric S. Talbot</title>
+        <title>Search &mdash; Eric S. Talbot</title>
             <link rel="stylesheet" href="_static/normalize.css" type="text/css">
             <link rel="stylesheet" href="_static/sphinx.css" type="text/css">
             <link rel="stylesheet" href="_static/main.css" type="text/css">
@@ -36,7 +36,10 @@
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
-    </script><script type="text/javascript" src="_static/underscore.js"></script><script type="text/javascript" src="_static/doctools.js"></script>
+    </script><script type="text/javascript" src="_static/underscore.js"></script><script type="text/javascript" src="_static/doctools.js"></script><script type="text/javascript" src="_static/searchtools.js"></script><script type="text/javascript">
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+  
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -54,41 +57,28 @@
 
       <div id="container"><header>
             <hgroup>
-              <h1><a href="#">Eric S. Talbot</a></h1></hgroup>
+              <h1><a href="index.html">Eric S. Talbot</a></h1></hgroup>
           </header>
       <nav>
             <ul><li class="main-nav">
-                  <a href="#">Home</a>
+                  <a href="index.html">Home</a>
                 </li>
               </ul>
-          </nav><div class="main-container"><div class="main wrapper clearfix"><article><div class="timestamp postmeta">
-            <span>December 06, 2013</span>
-        </div>
-        <div class="section" id="bluetooth-vehicle-tracking-correcting-short-trip-bias">
-<h1><a href="2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a></h1>
-<p>A new thing in transportation analysis is the use of arrays of Bluetooth detectors
-to track cars. The detectors work by recording the MAC IDs of wireless devices inside cars that
-pass nearby. By linking together multiple detections of the same MAC ID across different detectors,
-you can make a pretty good guess at the starting point, ending point, and route taken for a trip.</p>
-<p>There is one problem, however. Detectors can “miss” cars: even though a car has a wireless device
-inside, and it passes near a detector, the detector may fail to detect it. This has the effect of
-making some trips appear shorter than they really are. Take for example a car that passes near detectors
-1, 2, and 3. If detector 1 misses the car, the trip will appear to have passed by only
-detectors 2 and 3.</p>
-<p>To fix this problem, I’ve proposed an estimation method that explicitly accounts for missed
-detections. My tests show improvements over a naive method that ignores missed detections:</p>
-<a class="reference internal image-reference" href="_images/naive.png"><img alt="../../../_images/naive.png" src="_images/naive.png" style="width: 600px;"/></a>
-<p>See my <a class="reference external" href="http://ericstalbot.github.io/bluetooth/TalbotBluetooth.pdf">paper</a> and IPython <a class="reference external" href="http://ericstalbot.github.io/bluetooth/RouteFlowsRoadsideDetectors-v2.html">notebook</a> for details on the estimation method.</p>
-</div>
-        <div class="postmeta">
-        <div class="author">
-            <span>Posted by Eric S. Talbot</span>
-        </div>
-        
-        
-        </div><div class="archive_link">
-        <a href="archive.html"> &mdash; Blog Archive &mdash; </a>
-    </div></article><aside class="sidebar"><section><div class="widget">
+          </nav><div class="main-container"><div class="main wrapper clearfix"><article><h1 id="search-documentation">Search</h1>
+  <div id="fallback" class="admonition warning">
+  <script type="text/javascript">$('#fallback').hide();</script>
+  <p>Please activate JavaScript to enable the search
+    functionality.</p>
+  </div>
+  <p>From here you can search these documents. Enter your search
+    words into the box below and click "search". Note that the search
+    function will automatically search for all of the words. Pages
+    containing fewer words won't appear in the result list.</p>
+  <form action="" method="get">
+    <input type="text" name="q" value="" />
+    <input type="submit" value="search" />
+    <span id="search-progress" style="padding-left: 10px"></span>
+  </form><div id="search-results"></div></article><aside class="sidebar"><section><div class="widget">
     <h1>Recent Posts</h1>
     <ul><li>
             <a href="2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>
@@ -96,7 +86,7 @@ detections. My tests show improvements over a naive method that ignores missed d
 </div>
 </section><section><div class="widget" id="searchbox">
     <h1>Search</h1>
-    <form action="search.html" method="get">
+    <form action="#" method="get">
         <input type="text" name="q" />
         <button type="submit"><span class="webfont">L</span></button>
     </form>
