@@ -62,6 +62,56 @@
                 </li>
               </ul>
           </nav><div class="main-container"><div class="main wrapper clearfix"><article><div class="timestamp postmeta">
+            <span>December 20, 2013</span>
+        </div>
+        <div class="section" id="spatialdigraph">
+<h1><a href="2013/12/20/spatialdigraph.html">spatialdigraph</a></h1>
+<p>NetworkX is a great Python package for working with networks. It sits right next to NumPy, matplotlib, and Shapely in my everyday transportation analysis toolbox. However, I’ve often wished that Networkx graphs had spatial capabilities. So that’s why I created <a class="reference external" href="https://github.com/ericstalbot/spatialdigraph">spatialdigraph</a>. Here’s how it works:</p>
+<p>First, load a SpatialDiGraph of a highway interchange in New Hampshire:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'mygraph.pickle'</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This graph is in WGS84, so let’s transform to UTM for better drawing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">g</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">fiona</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">from_epsg</span><span class="p">(</span><span class="mi">32617</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>And now we can draw the graph:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">node_args</span> <span class="o">=</span> <span class="p">{</span><span class="s">'s'</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span> <span class="n">edge_args</span> <span class="o">=</span> <span class="p">{</span><span class="s">'c'</span><span class="p">:</span><span class="s">'0.5'</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>The SpatialDiGraph is a networkx.DiGraph subclass, so we have access to lots of useful
+methods from NetworkX. For example, we can get a shortest path on the network:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span> <span class="o">=</span> <span class="s">'194912632'</span><span class="p">,</span> <span class="s">'195049052'</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then with the added functionality that the SpatialDiGraph provides we can draw the path:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s">'b'</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And just to make it pretty, let’s also highlight the origin and destination nodes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">scatter_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">zorder</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s">'orange'</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s">'none'</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">scatter_args</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">scatter_args</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here’s the final result:</p>
+<a class="reference internal image-reference" href="_images/interchange.png"><img alt="../../../_images/interchange.png" src="_images/interchange.png" style="width: 600px;"/></a>
+<p>spatialdigraph is still a work in progress, but feel free to <a class="reference external" href="https://github.com/ericstalbot/spatialdigraph">check it out</a> on GitHub.</p>
+</div>
+        <div class="postmeta">
+        <div class="author">
+            <span>Posted by Eric S. Talbot</span>
+        </div>
+        
+        
+        </div><div class="separator post_separator"></div><div class="timestamp postmeta">
             <span>December 06, 2013</span>
         </div>
         <div class="section" id="bluetooth-vehicle-tracking-correcting-short-trip-bias">
@@ -91,6 +141,8 @@ detections. My tests show improvements over a naive method that ignores missed d
     </div></article><aside class="sidebar"><section><div class="widget">
     <h1>Recent Posts</h1>
     <ul><li>
+            <a href="2013/12/20/spatialdigraph.html">spatialdigraph</a>
+        </li><li>
             <a href="2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>
         </li></ul>
 </div>
@@ -102,7 +154,7 @@ detections. My tests show improvements over a naive method that ignores missed d
     </form>
 </div></section></aside></div> <!-- #main --></div> <!-- #main-container -->
 
-        <div class="footer-container"><footer class="wrapper">&copy; Copyright 1984, Eric S. Talbot. Powered by <a href="http://www.tinkerer.me/">Tinkerer</a> and <a href="http://sphinx.pocoo.org/">Sphinx</a>.</footer></div> <!-- footer-container -->
+        <div class="footer-container"><footer class="wrapper">&copy; Copyright 2013, Eric S. Talbot. Powered by <a href="http://www.tinkerer.me/">Tinkerer</a> and <a href="http://sphinx.pocoo.org/">Sphinx</a>.</footer></div> <!-- footer-container -->
 
       </div> <!--! end of #container --><!--[if lt IE 7 ]>
           <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
