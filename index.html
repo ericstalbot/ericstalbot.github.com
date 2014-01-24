@@ -62,6 +62,39 @@
                 </li>
               </ul>
           </nav><div class="main-container"><div class="main wrapper clearfix"><article><div class="timestamp postmeta">
+            <span>January 24, 2014</span>
+        </div>
+        <div class="section" id="viewing-spatial-data-in-ipython">
+<h1><a href="2014/01/24/viewing_spatial_data_in_ipython.html">Viewing Spatial Data in IPython</a></h1>
+<p>I do a lot of geospatial analysis for my work in transportation. My usual workflow
+includes manipulating and analyzing data using IPython, and then viewing the
+data by creating matplotlib plots, like this one:</p>
+<blockquote>
+<div><img alt="../../../_images/plot.png" src="_images/plot.png"/>
+</div></blockquote>
+<p>However, I frequently have found myself writing data to disk so I could explore
+it more interactively using QGIS. And more recently, I’ve been creating one-off
+HTML documents to view my data in slippy maps. Which got me thinking - how could you
+combine the great tools of Python and IPython with the ability to interactively
+explore data like you do in a desktop GIS or a web map?</p>
+<p>Well, it turned out to be a lot easier than I expected. IPython is already
+set up to render objects as HTML. All you have to do is provide a <cite>_repr_html_</cite>
+method which returns an HTML string. So I wrote a class that is initialized
+with a mapping in geojson format, and that has a <cite>_repr_html_</cite> method that returns
+an HTML web map powered by Leaflet’s TileLayer and GeoJSON objects. So after
+about 30 minutes and 60 lines (including a HTML template) this is what I had:</p>
+<blockquote>
+<div><img alt="../../../_images/webmap.png" src="_images/webmap.png"/>
+</div></blockquote>
+<p>Check out <a class="reference external" href="https://gist.github.com/ericstalbot/8605945">what</a> on github.</p>
+</div>
+        <div class="postmeta">
+        <div class="author">
+            <span>Posted by Eric S. Talbot</span>
+        </div>
+        
+        
+        </div><div class="separator post_separator"></div><div class="timestamp postmeta">
             <span>December 20, 2013</span>
         </div>
         <div class="section" id="spatialdigraph">
@@ -141,6 +174,8 @@ detections. My tests show improvements over a naive method that ignores missed d
     </div></article><aside class="sidebar"><section><div class="widget">
     <h1>Recent Posts</h1>
     <ul><li>
+            <a href="2014/01/24/viewing_spatial_data_in_ipython.html">Viewing Spatial Data in IPython</a>
+        </li><li>
             <a href="2013/12/20/spatialdigraph.html">spatialdigraph</a>
         </li><li>
             <a href="2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>

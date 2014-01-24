@@ -5,8 +5,39 @@
         <link>http://ericstalbot.github.io/</link>
         <description></description>
         <language>en-us</language>
-        <pubDate>Fri, 20 Dec 2013 00:00:00 -0500</pubDate>
+        <pubDate>Fri, 24 Jan 2014 00:00:00 -0500</pubDate>
         
+        <item>
+            <link>http://ericstalbot.github.io/2014/01/24/viewing_spatial_data_in_ipython.html</link>
+            <guid>http://ericstalbot.github.io/2014/01/24/viewing_spatial_data_in_ipython.html</guid>
+            <title><![CDATA[Viewing Spatial Data in IPython]]></title>
+            <description><![CDATA[<div class="section" id="viewing-spatial-data-in-ipython">
+<h1>Viewing Spatial Data in IPython</h1>
+<p>I do a lot of geospatial analysis for my work in transportation. My usual workflow
+includes manipulating and analyzing data using IPython, and then viewing the
+data by creating matplotlib plots, like this one:</p>
+<blockquote>
+<div><img alt="../../../_images/plot.png" src="http://ericstalbot.github.io/_images/plot.png"/>
+</div></blockquote>
+<p>However, I frequently have found myself writing data to disk so I could explore
+it more interactively using QGIS. And more recently, I’ve been creating one-off
+HTML documents to view my data in slippy maps. Which got me thinking - how could you
+combine the great tools of Python and IPython with the ability to interactively
+explore data like you do in a desktop GIS or a web map?</p>
+<p>Well, it turned out to be a lot easier than I expected. IPython is already
+set up to render objects as HTML. All you have to do is provide a <cite>_repr_html_</cite>
+method which returns an HTML string. So I wrote a class that is initialized
+with a mapping in geojson format, and that has a <cite>_repr_html_</cite> method that returns
+an HTML web map powered by Leaflet’s TileLayer and GeoJSON objects. So after
+about 30 minutes and 60 lines (including a HTML template) this is what I had:</p>
+<blockquote>
+<div><img alt="../../../_images/webmap.png" src="http://ericstalbot.github.io/_images/webmap.png"/>
+</div></blockquote>
+<p>Check out <a class="reference external" href="https://gist.github.com/ericstalbot/8605945">what</a> on github.</p>
+</div>]]></description>
+             <pubDate>Fri, 24 Jan 2014 00:00:00 -0500</pubDate>
+        </item>
+    
         <item>
             <link>http://ericstalbot.github.io/2013/12/20/spatialdigraph.html</link>
             <guid>http://ericstalbot.github.io/2013/12/20/spatialdigraph.html</guid>

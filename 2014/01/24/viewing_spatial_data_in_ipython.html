@@ -15,7 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Bluetooth Vehicle Tracking: Correcting Short Trip Bias &mdash; Eric S. Talbot</title>
+        <title>Viewing Spatial Data in IPython &mdash; Eric S. Talbot</title>
             <link rel="stylesheet" href="../../../_static/normalize.css" type="text/css">
             <link rel="stylesheet" href="../../../_static/sphinx.css" type="text/css">
             <link rel="stylesheet" href="../../../_static/main.css" type="text/css">
@@ -28,7 +28,7 @@
         <script>window.jQuery || document.write('<script src="../../../_static/vendor/jquery-1.8.2.min.js"><\/script>')</script>
         <script src="../../../_static/plugins.js"></script>
         <script src="../../../_static/main.js"></script>
-        <link rel="prev" title="spatialdigraph" href="../20/spatialdigraph.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.html" /><script type="text/javascript">
+        <link rel="next" title="spatialdigraph" href="../../../2013/12/20/spatialdigraph.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.html" /><script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
         VERSION:     '1.2.1',
@@ -62,23 +62,31 @@
                 </li>
               </ul>
           </nav><div class="main-container"><div class="main wrapper clearfix"><article><div class="timestamp postmeta">
-            <span>December 06, 2013</span>
+            <span>January 24, 2014</span>
         </div>
-    <div class="section" id="bluetooth-vehicle-tracking-correcting-short-trip-bias">
-<h1>Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</h1>
-<p>A new thing in transportation analysis is the use of arrays of Bluetooth detectors
-to track cars. The detectors work by recording the MAC IDs of wireless devices inside cars that
-pass nearby. By linking together multiple detections of the same MAC ID across different detectors,
-you can make a pretty good guess at the starting point, ending point, and route taken for a trip.</p>
-<p>There is one problem, however. Detectors can &#8220;miss&#8221; cars: even though a car has a wireless device
-inside, and it passes near a detector, the detector may fail to detect it. This has the effect of
-making some trips appear shorter than they really are. Take for example a car that passes near detectors
-1, 2, and 3. If detector 1 misses the car, the trip will appear to have passed by only
-detectors 2 and 3.</p>
-<p>To fix this problem, I&#8217;ve proposed an estimation method that explicitly accounts for missed
-detections. My tests show improvements over a naive method that ignores missed detections:</p>
-<a class="reference internal image-reference" href="../../../_images/naive.png"><img alt="../../../_images/naive.png" src="../../../_images/naive.png" style="width: 600px;" /></a>
-<p>See my <a class="reference external" href="http://ericstalbot.github.io/bluetooth/TalbotBluetooth.pdf">paper</a> and IPython <a class="reference external" href="http://ericstalbot.github.io/bluetooth/RouteFlowsRoadsideDetectors-v2.html">notebook</a> for details on the estimation method.</p>
+    <div class="section" id="viewing-spatial-data-in-ipython">
+<h1>Viewing Spatial Data in IPython</h1>
+<p>I do a lot of geospatial analysis for my work in transportation. My usual workflow
+includes manipulating and analyzing data using IPython, and then viewing the
+data by creating matplotlib plots, like this one:</p>
+<blockquote>
+<div><img alt="../../../_images/plot.png" src="../../../_images/plot.png" />
+</div></blockquote>
+<p>However, I frequently have found myself writing data to disk so I could explore
+it more interactively using QGIS. And more recently, I&#8217;ve been creating one-off
+HTML documents to view my data in slippy maps. Which got me thinking - how could you
+combine the great tools of Python and IPython with the ability to interactively
+explore data like you do in a desktop GIS or a web map?</p>
+<p>Well, it turned out to be a lot easier than I expected. IPython is already
+set up to render objects as HTML. All you have to do is provide a <cite>_repr_html_</cite>
+method which returns an HTML string. So I wrote a class that is initialized
+with a mapping in geojson format, and that has a <cite>_repr_html_</cite> method that returns
+an HTML web map powered by Leaflet&#8217;s TileLayer and GeoJSON objects. So after
+about 30 minutes and 60 lines (including a HTML template) this is what I had:</p>
+<blockquote>
+<div><img alt="../../../_images/webmap.png" src="../../../_images/webmap.png" />
+</div></blockquote>
+<p>Check out <a class="reference external" href="https://gist.github.com/ericstalbot/8605945">what</a> on github.</p>
 </div>
 
     <div class="postmeta">
@@ -88,16 +96,16 @@ detections. My tests show improvements over a naive method that ignores missed d
         
         
         </div><ul class="related clearfix">
-            <li class="left"> &laquo; <a href="../20/spatialdigraph.html">spatialdigraph</a></li>
-            <li class="right"></li>
+            <li class="left"></li>
+            <li class="right"><a href="../../../2013/12/20/spatialdigraph.html">spatialdigraph</a> &raquo; </li>
         </ul></article><aside class="sidebar"><section><div class="widget">
     <h1>Recent Posts</h1>
     <ul><li>
-            <a href="../../../2014/01/24/viewing_spatial_data_in_ipython.html">Viewing Spatial Data in IPython</a>
+            <a href="#">Viewing Spatial Data in IPython</a>
         </li><li>
-            <a href="../20/spatialdigraph.html">spatialdigraph</a>
+            <a href="../../../2013/12/20/spatialdigraph.html">spatialdigraph</a>
         </li><li>
-            <a href="#">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>
+            <a href="../../../2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>
         </li></ul>
 </div>
 </section><section><div class="widget" id="searchbox">
