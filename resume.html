@@ -1,0 +1,269 @@
+<html>
+<head>
+    <title>Eric S. Talbot</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+
+    <h1>Eric S. Talbot</h1>
+
+    <h2>Experience</h2>
+    <h4>Consultant, RSG, 2010 - Present</h4>
+
+    <div class="project">
+        <div class="project-title">
+            Custom Python application to automate GTFS feed maintenance for 
+            Advance Transit
+        </div>
+
+        <div>
+            Advance Transit needed their transit feed to be updated regularly 
+            so that routes and schedules would always be up-to-date on Google maps. 
+            The existing process involved tweaking ad-hoc scripts and checking 
+            for errors manually with every update. I built a custom Python application
+            which has eliminated manual updating and saved days of time, 
+            while delivering a feed that is more rigorously validated and richer 
+            in data detail. The application is installed on AT's server 
+            using a pyinstaller frozen distribution. It runs automatically once 
+            per week and:
+            
+                <ul>
+                    <li>
+                        consumes route and schedule data from Advance Transit's 
+                        Microsoft SQL Server database via pyodbc;
+                    </li>
+                    <li>
+                        constructs the feed and accumulates warnings and errors from 
+                        custom validation logic and Google's validation utility, then 
+                        emails a compiled report;
+                    </li>
+                    <li>
+                        builds valid spatial data, even for looping and self-overlapping
+                        routes, with a stop snapping algorithm that uses shapely, fiona, 
+                        and pyproj; and 
+                    </li>
+                    <li>
+                        publishes the feed for use by Google and others.
+                    </li>
+                </ul>
+                
+            
+        </div>
+    </div>
+    
+    
+    
+        
+    <div class="project">
+        <div class="project-title">
+            Scraping intercity bus schedules from the MegaBus and Bolt Bus
+            websites 
+        </div>
+        
+        <div>
+            We received a database of nation-wide intercity bus schedules
+            and routes. We needed to use this information to help
+            estimate bus travel patterns, but the data for MegaBus and Bolt Bus 
+            was incomplete or incorrect. I developed a procedure in IPython
+            to scrape schedule data from the web, process the data to isolate
+            unique bus trips, and integrate the trips back into the main 
+            database. To implement the procedure I:
+            
+            <ul>
+                
+                <li>
+                    analyzed the web pages to extract pertinent 
+                    AJAX request URLs and parameters;
+                </li>
+                <li>
+                    used Selenium, requests, BeautifulSoup, and geopandas;
+                </li>
+                <li>
+                    stored and maintained the data in an sqlite database
+                    with a custom field type for shapely geometries;
+                </li>
+                <li>
+                    implemented a data caching scheme to avoid duplicate
+                    requests across scraping sessions;
+                </li>
+                <li>
+                    developed a graph-based algorithm with networkx to
+                    detect duplicate data and extract unique trips; and
+                </li>
+                <li>
+                    developed an algorithm to estimate bus passengers by city 
+                    pair across the nation.
+                </li>
+            </ul>
+        </div>
+        
+    </div>
+            
+
+    <div class="project">     
+        <div class="project-title">
+            Python application for mining Bluetooth detector data
+            to estimate highway travel patterns in Florida
+        </div>
+
+        <div>
+           The Florida Turnpike Authority regularly deploys road-side
+           Bluetooth devices to detect vehicles as they travel throughout
+           the highway network. The devices collect vast amounts 
+           of data, but it is difficult to extract meaningful insights from 
+           the data in its raw form. I developed a Python analysis package
+           which mines the data to produce estimates of vehicle travel patterns.
+           The package:
+           
+            <ul>
+                <li>
+                    provides a clean interface for interactive analysis;
+                </li>
+                <li>
+                    produces diagnostic graphs using matplotlib;
+                </li>
+                <li>
+                    implements efficient vector calculations using numpy;
+                </li>
+                <li>
+                    implements custom data cleaning and estimation techniques; and
+                </li>
+                <li>
+                    has been used successfully for dozens of device deployments 
+                    and for datasets with millions of records.
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    
+
+    <div class="project">
+    
+        <div class="project-title">
+            Python web application to facilitate multi-user data cleaning for 
+            on-board transit surveys
+        </div>
+        
+        <div>
+            Transit agencies around the county use paper-based surveys
+            to collect information from bus and train riders. The 
+            data is useful for planning transit service upgrades, but
+            the free-form nature of a paper survey often requires 
+            manual data review and cleaning to produce useful information.
+            I created a Python web application to speed the process for 
+            data-cleaning teams. The application:
+            
+            
+            <ul>
+                <li>
+                    uses web.py to serve JSON data, including 
+                    spatial data as GeoJSON;
+                </li>
+                <li>
+                    has a Javascript/AJAX based front-end interface, which 
+                    includes a Leaflet map for interactively editing spatial 
+                    objects;
+                </li>
+                <li>
+                    uses Bootstrap to provide a responsive layout;
+                </li>
+                <li>
+                    integrates the Google geocoding API; and
+                </li>
+                <li>
+                    automatically manages the team data-cleaning workflow, 
+                    including preventing editing conflicts and tracking 
+                    tasks done and still to do.
+                </li>
+            </ul>
+        
+        </div>
+          
+    </div>
+      
+    <div class="project">
+        <div class="project-title">
+            Python web application for analyzing vulnerability of transportation
+            assets to climate change flooding
+        </div>
+        <div>
+            The application:
+            <ul>
+                <li>
+                    allows users to provide input data in many different 
+                    spatial data formats such as shape files and KML;
+                </li>
+                <li>
+                    uses web.py to provide an interface for 
+                    specifying the vulnerability 
+                    calculation approach, and shows results on a table 
+                    and a Leaflet map; and
+                </li>
+                <li>
+                    automatically caches results and detects changes to 
+                    the input files or calculation specification 
+                    to trigger calculating new results.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+     
+    <div class="project">
+        <div class="project-title">
+            Genetic algorithm for modelling curvature on New Hampshire's state highways
+            
+        </div>
+        <div>
+            The algorithm:
+            <ul>
+                <li>
+                    uses Inspyred to iteratively estimate locations and radii for 
+                    curves in NHDOT's highways shape file.
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>Personal Project</h2>
+    <div class="project">
+        <div class="project-title">
+            Python web application for planning bike trips on Vermont's 
+            unmaintained dirt roads
+        </div>
+        <div>
+            The application:
+            <ul>
+                <li>
+                    consumes roadway data from VTrans' official highway shape file
+                    to produce a network that includes public roads that are missing
+                    from Google, Bing, etc;
+                </li>
+                <li>
+                    implements a routing algorithm which favors dirt roads;
+                </li>
+                <li>
+                    provides web API for requesting directions and returns JSON
+                    responses; and
+                </li>
+                <li>
+                    includes an interactive Leaflet map with custom Mapbox tiles
+                    for requesting and viewing routes.
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    <h2>Education</h2>
+    <ul>
+    <li>M.S., Civil Engineering, Texas A&M University, 2010</li>
+    <li>B.S., Civil Engineering, Brigham Young University, 2007</li>
+    </ul>
+</body>
+</html>
+
