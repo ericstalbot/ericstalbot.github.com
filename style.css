@@ -1,0 +1,32 @@
+
+body {
+    
+    max-width: 800px;
+
+
+
+}
+
+h1 {
+    font-size: 40px;
+
+}
+
+h1, h2, h3, h4, .project-title {
+    
+    color: #777;
+    font-family: sans-serif;
+}
+
+.project-title{
+    
+    margin-bottom: 10px;
+    font-weight: bold;
+
+}
+
+.project{
+
+    margin-left: 20px;
+
+}
