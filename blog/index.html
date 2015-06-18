@@ -21,7 +21,7 @@
             <link rel="stylesheet" href="_static/main.css" type="text/css">
             <link rel="stylesheet" href="_static/flat.css" type="text/css">
             <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-            <link rel="stylesheet" href="_static/webfont.css" type="text/css">
+            <link rel="stylesheet" href="_static/font-awesome.min.css" type="text/css">
         <link rel="shortcut icon" href="_static/tinkerer.ico" /><!-- Load modernizr and JQuery -->
         <script src="_static/vendor/modernizr-2.6.2.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -31,7 +31,7 @@
         <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.html" /><script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.2.1',
+        VERSION:     '1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -47,25 +47,25 @@
             }
         });
     </script></head>
-    <body>
+    <body role="document">
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-      <div id="container"><header>
+      <div id="container"><header role="banner">
             <hgroup>
               <h1><a href="#">Eric S. Talbot</a></h1></hgroup>
           </header>
-      <nav>
+      <nav role="navigation">
             <ul><li class="main-nav">
                   <a href="#">Home</a>
                 </li>
               </ul>
-          </nav><div class="main-container"><div class="main wrapper clearfix"><article><div class="timestamp postmeta">
+          </nav><div class="main-container" role="main"><div class="main wrapper body clearfix"><article><div class="timestamp postmeta">
             <span>January 24, 2014</span>
         </div>
-        <div class="section" id="viewing-spatial-data-in-ipython">
-<h1><a href="2014/01/24/viewing_spatial_data_in_ipython.html">Viewing Spatial Data in IPython</a></h1>
+        <div class="section">
+            <h1><a href="2014/01/24/viewing_spatial_data_in_ipython.html">Viewing Spatial Data in IPython</a></h1>
 <p>I do a lot of geospatial analysis for my work in transportation. My usual workflow
 includes manipulating and analyzing data using IPython, and then viewing the
 data by creating matplotlib plots, like this one:</p>
@@ -87,7 +87,8 @@ about 30 minutes and 60 lines (including a HTML template) this is what I had:</p
 <div><img alt="../../../_images/webmap.png" src="_images/webmap.png"/>
 </div></blockquote>
 <p>Check out <a class="reference external" href="https://gist.github.com/ericstalbot/8605945">what</a> on github.</p>
-</div>
+
+        </div>
         <div class="postmeta">
         <div class="author">
             <span>Posted by Eric S. Talbot</span>
@@ -97,8 +98,8 @@ about 30 minutes and 60 lines (including a HTML template) this is what I had:</p
         </div><div class="separator post_separator"></div><div class="timestamp postmeta">
             <span>December 20, 2013</span>
         </div>
-        <div class="section" id="spatialdigraph">
-<h1><a href="2013/12/20/spatialdigraph.html">spatialdigraph</a></h1>
+        <div class="section">
+            <h1><a href="2013/12/20/spatialdigraph.html">spatialdigraph</a></h1>
 <p>NetworkX is a great Python package for working with networks. It sits right next to NumPy, matplotlib, and Shapely in my everyday transportation analysis toolbox. However, I’ve often wished that Networkx graphs had spatial capabilities. So that’s why I created <a class="reference external" href="https://github.com/ericstalbot/spatialdigraph">spatialdigraph</a>. Here’s how it works:</p>
 <p>First, load a SpatialDiGraph of a highway interchange in New Hampshire:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'mygraph.pickle'</span><span class="p">))</span>
@@ -137,7 +138,8 @@ methods from NetworkX. For example, we can get a shortest path on the network:</
 <p>Here’s the final result:</p>
 <a class="reference internal image-reference" href="_images/interchange.png"><img alt="../../../_images/interchange.png" src="_images/interchange.png" style="width: 600px;"/></a>
 <p>spatialdigraph is still a work in progress, but feel free to <a class="reference external" href="https://github.com/ericstalbot/spatialdigraph">check it out</a> on GitHub.</p>
-</div>
+
+        </div>
         <div class="postmeta">
         <div class="author">
             <span>Posted by Eric S. Talbot</span>
@@ -147,8 +149,8 @@ methods from NetworkX. For example, we can get a shortest path on the network:</
         </div><div class="separator post_separator"></div><div class="timestamp postmeta">
             <span>December 06, 2013</span>
         </div>
-        <div class="section" id="bluetooth-vehicle-tracking-correcting-short-trip-bias">
-<h1><a href="2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a></h1>
+        <div class="section">
+            <h1><a href="2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a></h1>
 <p>A new thing in transportation analysis is the use of arrays of Bluetooth detectors
 to track cars. The detectors work by recording the MAC IDs of wireless devices inside cars that
 pass nearby. By linking together multiple detections of the same MAC ID across different detectors,
@@ -162,7 +164,8 @@ detectors 2 and 3.</p>
 detections. My tests show improvements over a naive method that ignores missed detections:</p>
 <a class="reference internal image-reference" href="_images/naive.png"><img alt="../../../_images/naive.png" src="_images/naive.png" style="width: 600px;"/></a>
 <p>See my <a class="reference external" href="http://ericstalbot.github.io/bluetooth/TalbotBluetooth.pdf">paper</a> and IPython <a class="reference external" href="http://ericstalbot.github.io/bluetooth/RouteFlowsRoadsideDetectors-v2.html">notebook</a> for details on the estimation method.</p>
-</div>
+
+        </div>
         <div class="postmeta">
         <div class="author">
             <span>Posted by Eric S. Talbot</span>
@@ -181,15 +184,15 @@ detections. My tests show improvements over a naive method that ignores missed d
             <a href="2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>
         </li></ul>
 </div>
-</section><section><div class="widget" id="searchbox">
-    <h1>Search</h1>
+</section><section><div class="widget" id="searchbox" role="search">
+    <h1><a href="#searchbox">Search</a></h1>
     <form action="search.html" method="get">
         <input type="text" name="q" />
-        <button type="submit"><span class="webfont">L</span></button>
+        <button type="submit"><span class="fa fa-search"></span></button>
     </form>
 </div></section></aside></div> <!-- #main --></div> <!-- #main-container -->
 
-        <div class="footer-container"><footer class="wrapper">&copy; Copyright 2013, Eric S. Talbot. Powered by <a href="http://www.tinkerer.me/">Tinkerer</a> and <a href="http://sphinx.pocoo.org/">Sphinx</a>.</footer></div> <!-- footer-container -->
+        <div class="footer-container" role="contentinfo"><footer class="wrapper">&copy; Copyright 2013, Eric S. Talbot. Powered by <a href="http://www.tinkerer.me/">Tinkerer</a> and <a href="http://sphinx.pocoo.org/">Sphinx</a>.</footer></div> <!-- footer-container -->
 
       </div> <!--! end of #container --><!--[if lt IE 7 ]>
           <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
