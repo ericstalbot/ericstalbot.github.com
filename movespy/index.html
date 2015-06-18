@@ -23,24 +23,24 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="movespy 0.1.0 documentation" href="#" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="the-movespy-manual">
 <h1>The movespy Manual<a class="headerlink" href="#the-movespy-manual" title="Permalink to this headline">¶</a></h1>
@@ -51,24 +51,24 @@ from cars. MOVES is a valuable resource for analysts because it is based
 upon substantial and rigorous research. Some analysts may even be required
 to use MOVES because it is mandatory for certain analysis linked to federal
 transportation funding.</p>
-<p><tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> aims to make using MOVES easier by making it easy to
+<p><code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> aims to make using MOVES easier by making it easy to
 write programs to automate MOVES runs and retrieve the results.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Currently <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> focuses on project-level on-road analysis. In the future
-<tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> may also focus on county-level or off-road analysis.</p>
+<p class="last">Currently <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> focuses on project-level on-road analysis. In the future
+<code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> may also focus on county-level or off-road analysis.</p>
 </div>
 <div class="section" id="installing-and-learning-python">
 <h3>Installing and learning Python<a class="headerlink" href="#installing-and-learning-python" title="Permalink to this headline">¶</a></h3>
-<p><tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> is implemented as a Python package. To use <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> effectively you should know at least a little about Python. But don&#8217;t worry: Python is easy to learn. And once you know it there&#8217;s a lot you can do with it (not just <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt>). To download Python go to <a class="reference external" href="http://python.org/">python.org</a>. To learn Python, try one of the many good <a class="reference external" href="http://www.google.com/search?q=python+tutorial">Python tutorials</a> online.</p>
+<p><code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> is implemented as a Python package. To use <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> effectively you should know at least a little about Python. But don&#8217;t worry: Python is easy to learn. And once you know it there&#8217;s a lot you can do with it (not just <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code>). To download Python go to <a class="reference external" href="http://python.org/">python.org</a>. To learn Python, try one of the many good <a class="reference external" href="http://www.google.com/search?q=python+tutorial">Python tutorials</a> online.</p>
 </div>
 <div class="section" id="installing-moves">
 <h3>Installing MOVES<a class="headerlink" href="#installing-moves" title="Permalink to this headline">¶</a></h3>
-<p><tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> works by interacting with MOVES, so you&#8217;ll need to install MOVES on your computer. To download MOVES go to the EPA&#8217;s <a class="reference external" href="http://www.epa.gov/otaq/models/moves/index.htm">MOVES webpage</a>.</p>
-<p>When you install moves, make a note of the folder where you put it. You&#8217;ll need that to install <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt>.</p>
+<p><code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> works by interacting with MOVES, so you&#8217;ll need to install MOVES on your computer. To download MOVES go to the EPA&#8217;s <a class="reference external" href="http://www.epa.gov/otaq/models/moves/index.htm">MOVES webpage</a>.</p>
+<p>When you install moves, make a note of the folder where you put it. You&#8217;ll need that to install <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code>.</p>
 </div>
 <div class="section" id="installing-movespy">
-<h3>Installing <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt><a class="headerlink" href="#installing-movespy" title="Permalink to this headline">¶</a></h3>
+<h3>Installing <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code><a class="headerlink" href="#installing-movespy" title="Permalink to this headline">¶</a></h3>
 <p>Download the <a class="reference external" href="https://pypi.python.org/pypi/movespy">installer</a> and run it.</p>
 <p>Next, checkout the settings:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">movespy.moves</span>
@@ -96,7 +96,7 @@ these settings if needed:</p>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="using-movespy-to-run-moves">
-<h3>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to run MOVES<a class="headerlink" href="#using-movespy-to-run-moves" title="Permalink to this headline">¶</a></h3>
+<h3>Using <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> to run MOVES<a class="headerlink" href="#using-movespy-to-run-moves" title="Permalink to this headline">¶</a></h3>
 <p>Let&#8217;s say we would like to estimate emissions for vehicle traffic on a single link. First some details about the link:</p>
 <blockquote>
 <div><ul class="simple">
@@ -106,10 +106,10 @@ these settings if needed:</p>
 <li>Just to make things easy, all the vehicles on the link are passenger cars, and they are all five years old.</li>
 </ul>
 </div></blockquote>
-<p>To set up this analysis we first construct a <cite>links</cite> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> that holds
+<p>To set up this analysis we first construct a <cite>links</cite> <code class="xref py py-class docutils literal"><span class="pre">dict</span></code> that holds
 just one key-value pair. The key is the ID for the link, which in this case
-is <tt class="docutils literal"><span class="pre">1</span></tt>. The
-value is another <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> that has that has strings for keys and our input
+is <code class="docutils literal"><span class="pre">1</span></code>. The
+value is another <code class="xref py py-class docutils literal"><span class="pre">dict</span></code> that has that has strings for keys and our input
 data for values, like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;grade&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.2</span><span class="p">,</span>
              <span class="s">&#39;length&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
@@ -119,7 +119,7 @@ data for values, like so:</p>
              <span class="s">&#39;volume&#39;</span><span class="p">:</span> <span class="mi">400</span><span class="p">}}</span>
 </pre></div>
 </div>
-<p>Next we construct an <cite>activity</cite> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>, like so:</p>
+<p>Next we construct an <cite>activity</cite> <code class="xref py py-class docutils literal"><span class="pre">dict</span></code>, like so:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
              <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span> <span class="c">#50027 is the ID for Windsor County, Vermont</span>
              <span class="s">&#39;day_type&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="c">#5 is the ID for weekdays</span>
@@ -129,20 +129,20 @@ data for values, like so:</p>
              <span class="s">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span> <span class="c">#notice that the links dictionary is included here</span>
 </pre></div>
 </div>
-<p>So now we have the <cite>activity</cite> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>, which contains the <cite>links</cite> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>. Between the two dictionaries, we&#8217;ve included all the input data that we listed at the beginning. There&#8217;s just one more dictionary that we need to make before we can run MOVES, and that&#8217;s the <cite>options</cite> <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt>:</p>
+<p>So now we have the <cite>activity</cite> <code class="xref py py-class docutils literal"><span class="pre">dict</span></code>, which contains the <cite>links</cite> <code class="xref py py-class docutils literal"><span class="pre">dict</span></code>. Between the two dictionaries, we&#8217;ve included all the input data that we listed at the beginning. There&#8217;s just one more dictionary that we need to make before we can run MOVES, and that&#8217;s the <cite>options</cite> <code class="xref py py-class docutils literal"><span class="pre">dict</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;detail&#39;</span><span class="p">:</span> <span class="s">&#39;average&#39;</span><span class="p">}</span>
 </pre></div>
 </div>
-<p>This <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt> specifies that we want to use the average speed analysis approach in MOVES (rather than the operating mode distribution approach).</p>
-<p>Now we&#8217;re ready. To run MOVES we first import <tt class="xref py py-mod docutils literal"><span class="pre">movespy.moves</span></tt>:</p>
+<p>This <code class="xref py py-class docutils literal"><span class="pre">dict</span></code> specifies that we want to use the average speed analysis approach in MOVES (rather than the operating mode distribution approach).</p>
+<p>Now we&#8217;re ready. To run MOVES we first import <code class="xref py py-mod docutils literal"><span class="pre">movespy.moves</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">movespy.moves</span>
 </pre></div>
 </div>
-<p>Then we initialize an instance of the <tt class="xref py py-class docutils literal"><span class="pre">movespy.moves.Moves</span></tt> class, passing the <cite>activity</cite> and <cite>options</cite> dictionaries as parameters:</p>
+<p>Then we initialize an instance of the <code class="xref py py-class docutils literal"><span class="pre">movespy.moves.Moves</span></code> class, passing the <cite>activity</cite> and <cite>options</cite> dictionaries as parameters:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">moves</span> <span class="o">=</span> <span class="n">movespy</span><span class="o">.</span><span class="n">moves</span><span class="o">.</span><span class="n">Moves</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Then we call the <tt class="xref py py-meth docutils literal"><span class="pre">movespy.moves.Moves.run()</span></tt> method on the <tt class="xref py py-class docutils literal"><span class="pre">movespy.moves.Moves</span></tt> instance:</p>
+<p>Then we call the <code class="xref py py-meth docutils literal"><span class="pre">movespy.moves.Moves.run()</span></code> method on the <code class="xref py py-class docutils literal"><span class="pre">movespy.moves.Moves</span></code> instance:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">emissions_out</span> <span class="o">=</span> <span class="n">moves</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -177,7 +177,7 @@ data for values, like so:</p>
 </div>
 </div>
 <div class="section" id="using-movespy-to-calculate-vsp-and-operating-mode">
-<h3>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to calculate VSP and Operating Mode<a class="headerlink" href="#using-movespy-to-calculate-vsp-and-operating-mode" title="Permalink to this headline">¶</a></h3>
+<h3>Using <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> to calculate VSP and Operating Mode<a class="headerlink" href="#using-movespy-to-calculate-vsp-and-operating-mode" title="Permalink to this headline">¶</a></h3>
 <p>We have a vehicle trajectory
 dataset produced by a traffic microsimulation. The data set looks like this:</p>
 <table border="1" class="docutils">
@@ -265,7 +265,7 @@ three vehicles starts at a different time: seconds 0, 3, and 2 for vehicles
 and grade in percent is given in the table. We will also assume that
 all three vehicles have a mass of 2.0 tonnes, and that they are all
 passenger vehicles.</p>
-<p>We want to use <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to calculate the VSP and operating mode for
+<p>We want to use <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> to calculate the VSP and operating mode for
 each vehicle second. Before we can do that, we need find values for
 four parameters of the VSP equation: fixed mass factor, alpha, beta and gamma.
 Fortunately, MOVES has default values for these parameters for each of the
@@ -280,20 +280,20 @@ our inputs:</p>
 <span class="n">mass</span><span class="p">,</span> <span class="n">mass_factor</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.0020</span><span class="p">,</span> <span class="mf">0.00049</span>
 </pre></div>
 </div>
-<p>Next we import the <tt class="xref py py-mod docutils literal"><span class="pre">movespy.trajectory</span></tt> module:</p>
+<p>Next we import the <code class="xref py py-mod docutils literal"><span class="pre">movespy.trajectory</span></code> module:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">movespy.trajectory</span>
 </pre></div>
 </div>
-<p>Finally, we run the <tt class="xref py py-func docutils literal"><span class="pre">moves.trajectory.getVSPOpMode()</span></tt> function:</p>
+<p>Finally, we run the <code class="xref py py-func docutils literal"><span class="pre">moves.trajectory.getVSPOpMode()</span></code> function:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">vsp</span><span class="p">,</span> <span class="n">opmode</span> <span class="o">=</span> <span class="n">movespy</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">getVSPOpMode</span><span class="p">(</span><span class="n">veh</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">grade</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span>
     <span class="n">mass_factor</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="using-movespy-to-generate-emission-rate-look-up-tables">
-<h3>Using <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> to Generate Emission Rate Look-up Tables<a class="headerlink" href="#using-movespy-to-generate-emission-rate-look-up-tables" title="Permalink to this headline">¶</a></h3>
+<h3>Using <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> to Generate Emission Rate Look-up Tables<a class="headerlink" href="#using-movespy-to-generate-emission-rate-look-up-tables" title="Permalink to this headline">¶</a></h3>
 <p>To generate a look-up table of emissions rates, you will need to provide an activity argument that is similar
-to the activity argument for the <tt class="xref py py-class docutils literal"><span class="pre">movespy.moves.Moves</span></tt> initializer, except that it does not include
+to the activity argument for the <code class="xref py py-class docutils literal"><span class="pre">movespy.moves.Moves</span></code> initializer, except that it does not include
 the &#8216;links&#8217; key/value pair. For example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">activity</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&#39;age_distr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="mi">11</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span> <span class="mi">21</span><span class="p">:</span> <span class="p">{</span><span class="mi">5</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}},</span>
              <span class="s">&#39;county&#39;</span><span class="p">:</span> <span class="mi">50027</span><span class="p">,</span>
@@ -305,11 +305,11 @@ the &#8216;links&#8217; key/value pair. For example:</p>
 </div>
 <p>This dictionary specifies that we want a look up table for a fleet composed entirely of vehicles that
 are five years old; in Windsor County, Vermont; on weekday; during the 4:00 pm hour; in June; and
-in the year 2015. To generate the look up table we first import the <tt class="xref py py-mod docutils literal"><span class="pre">movespy.ratetable</span></tt> module:</p>
+in the year 2015. To generate the look up table we first import the <code class="xref py py-mod docutils literal"><span class="pre">movespy.ratetable</span></code> module:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">movespy.ratetable</span>
 </pre></div>
 </div>
-<p>Then we run the <tt class="xref py py-func docutils literal"><span class="pre">movespy.ratetable.getRateTable()</span></tt> function, with our activity dictionary as the argument. We also limit the table to include only two operating modes and two source types. We also
+<p>Then we run the <code class="xref py py-func docutils literal"><span class="pre">movespy.ratetable.getRateTable()</span></code> function, with our activity dictionary as the argument. We also limit the table to include only two operating modes and two source types. We also
 provide an empty options dictionary:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">table</span> <span class="o">=</span> <span class="n">movespy</span><span class="o">.</span><span class="n">ratetable</span><span class="o">.</span><span class="n">getRateTable</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span>
                                        <span class="p">{},</span>
@@ -338,17 +338,18 @@ quantity values are emissions rates in either grams or kJ per vehicle-hour.</p>
 <h2>Moves Class Initializer Parameters<a class="headerlink" href="#moves-class-initializer-parameters" title="Permalink to this headline">¶</a></h2>
 <p>Before you can run MOVES you need to construct the <cite>&lt;activity&gt;</cite> and <cite>&lt;options&gt;</cite>
 parameters
-for the <tt class="xref py py-class docutils literal"><span class="pre">Moves</span></tt> class initializer. Study this section to learn the structure for each.</p>
+for the <code class="xref py py-class docutils literal"><span class="pre">Moves</span></code> class initializer. Study this section to learn the structure for each.</p>
 <dl class="glossary docutils">
 <dt id="term-activity">&lt;activity&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="highlight-python"><pre>{'county':&lt;county_id&gt;,
- 'year':&lt;year&gt;,
- 'month':&lt;month&gt;,
- 'hour':&lt;hour&gt;,
- 'day_type':&lt;day_type_id&gt;,
- 'age_distr':&lt;age_distr&gt;
- 'links':&lt;links&gt;}</pre>
+<div class="highlight-python"><div class="highlight"><pre>{&#39;county&#39;:&lt;county_id&gt;,
+ &#39;year&#39;:&lt;year&gt;,
+ &#39;month&#39;:&lt;month&gt;,
+ &#39;hour&#39;:&lt;hour&gt;,
+ &#39;day_type&#39;:&lt;day_type_id&gt;,
+ &#39;age_distr&#39;:&lt;age_distr&gt;
+ &#39;links&#39;:&lt;links&gt;}
+</pre></div>
 </div>
 <p class="last">This is the root level of the <cite>&lt;activity&gt;</cite> parameter.</p>
 </dd>
@@ -357,16 +358,18 @@ for the <tt class="xref py py-class docutils literal"><span class="pre">Moves</s
 means 30 years old.</dd>
 <dt id="term-age-distr">&lt;age_distr&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="last highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;,
+<div class="last highlight-python"><div class="highlight"><pre>{&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;,
  ...,
-&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;}</pre>
+&lt;source_type_id&gt;:&lt;source_type_age_distr&gt;}
+</pre></div>
 </div>
 </dd>
 <dt id="term-breakdown-selection">&lt;breakdown_selection&gt;</dt>
 <dd>One of <cite>&#8216;model_year&#8217;</cite>, <cite>&#8216;fuel&#8217;</cite>, <cite>&#8216;process&#8217;</cite>, or <cite>&#8216;source&#8217;</cite>.</dd>
 <dt id="term-breakdown-selections">&lt;breakdown_selections&gt;</dt>
 <dd><p class="first">An iterable:</p>
-<div class="highlight-python"><pre>[&lt;breakdown_selection&gt;, ...]</pre>
+<div class="highlight-python"><div class="highlight"><pre>[&lt;breakdown_selection&gt;, ...]
+</pre></div>
 </div>
 <p class="last">Specifies by which fields the output should be disaggregated.</p>
 </dd>
@@ -375,7 +378,7 @@ means 30 years old.</dd>
 <dt id="term-day-type-id">&lt;day_type_id&gt;</dt>
 <dd>An integer for the day type. 5 for weekday, and 2 for weekend.</dd>
 <dt id="term-detail">&lt;detail&gt;</dt>
-<dd>One of <tt class="docutils literal"><span class="pre">'average'</span></tt>, <tt class="docutils literal"><span class="pre">'opmode'</span></tt>, or <tt class="docutils literal"><span class="pre">'driveschedule'</span></tt>.</dd>
+<dd>One of <code class="docutils literal"><span class="pre">'average'</span></code>, <code class="docutils literal"><span class="pre">'opmode'</span></code>, or <code class="docutils literal"><span class="pre">'driveschedule'</span></code>.</dd>
 <dt id="term-driveschedule">&lt;driveschedule&gt;</dt>
 <dd>A sequence of tuples. Each tuple contains two items: Speed in miles per hour (a float),
 and grade in percent (a float). Represents a vehicle trajectory. Must be sorted by time, and
@@ -394,36 +397,39 @@ so that their product remains constant and <cite>&lt;length&gt;</cite> is less t
 </dd>
 <dt id="term-link">&lt;link&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="highlight-python"><pre>{'road_type':&lt;road_type_id&gt;,
- 'length':&lt;length&gt;,
- 'volume':&lt;volume&gt;,
- 'speed':&lt;speed&gt;,
- 'grade':&lt;grade&gt;,
- 'source_distr':&lt;source_distr&gt;,
- 'opmode_distr':&lt;opmode_distr&gt;,
- 'driveschedule':&lt;driveschedule&gt;}</pre>
+<div class="highlight-python"><div class="highlight"><pre>{&#39;road_type&#39;:&lt;road_type_id&gt;,
+ &#39;length&#39;:&lt;length&gt;,
+ &#39;volume&#39;:&lt;volume&gt;,
+ &#39;speed&#39;:&lt;speed&gt;,
+ &#39;grade&#39;:&lt;grade&gt;,
+ &#39;source_distr&#39;:&lt;source_distr&gt;,
+ &#39;opmode_distr&#39;:&lt;opmode_distr&gt;,
+ &#39;driveschedule&#39;:&lt;driveschedule&gt;}
+</pre></div>
 </div>
-<p class="last">The <tt class="docutils literal"><span class="pre">'opmode_distr'</span></tt> key and its value are only required if the value for
-the <tt class="docutils literal"><span class="pre">'detail'</span></tt> key in the <cite>&lt;options&gt;</cite> dictionary is <tt class="docutils literal"><span class="pre">'opmode'</span></tt>.
-The <tt class="docutils literal"><span class="pre">'driveschedule'</span></tt> key and its value are only required if the value for
-the <tt class="docutils literal"><span class="pre">'detail'</span></tt> key in the <cite>&lt;options&gt;</cite> dictionary is <tt class="docutils literal"><span class="pre">'driveschedule'</span></tt>.</p>
+<p class="last">The <code class="docutils literal"><span class="pre">'opmode_distr'</span></code> key and its value are only required if the value for
+the <code class="docutils literal"><span class="pre">'detail'</span></code> key in the <cite>&lt;options&gt;</cite> dictionary is <code class="docutils literal"><span class="pre">'opmode'</span></code>.
+The <code class="docutils literal"><span class="pre">'driveschedule'</span></code> key and its value are only required if the value for
+the <code class="docutils literal"><span class="pre">'detail'</span></code> key in the <cite>&lt;options&gt;</cite> dictionary is <code class="docutils literal"><span class="pre">'driveschedule'</span></code>.</p>
 </dd>
 <dt id="term-link-id">&lt;link_id&gt;</dt>
 <dd>An arbitrary positive integer identifying the link</dd>
 <dt id="term-links">&lt;links&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="last highlight-python"><pre>{&lt;link_id&gt;:&lt;link&gt;,
+<div class="last highlight-python"><div class="highlight"><pre>{&lt;link_id&gt;:&lt;link&gt;,
  ...,
- &lt;link_id&gt;:&lt;link&gt;}</pre>
+ &lt;link_id&gt;:&lt;link&gt;}
+</pre></div>
 </div>
 </dd>
 <dt id="term-month">&lt;month&gt;</dt>
 <dd>An integer for the month (1 = January).</dd>
 <dt id="term-opmode-distr">&lt;opmode_distr&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="last highlight-python"><pre>{&lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;,
+<div class="last highlight-python"><div class="highlight"><pre>{&lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;,
  ...,
- &lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;}</pre>
+ &lt;source_type_id&gt;:&lt;source_type_opmode_distr&gt;}
+</pre></div>
 </div>
 </dd>
 <dt id="term-opmode-id">&lt;opmode_id&gt;</dt>
@@ -438,9 +444,10 @@ always 501, regardless of the pollutant or process you may be interested in.</p>
 </dd>
 <dt id="term-options">&lt;options&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="highlight-python"><pre>{'detail':&lt;detail&gt;,
- 'pollutants':&lt;pollutants&gt;,
- 'breakdown':&lt;breakdown_selections&gt;}</pre>
+<div class="highlight-python"><div class="highlight"><pre>{&#39;detail&#39;:&lt;detail&gt;,
+ &#39;pollutants&#39;:&lt;pollutants&gt;,
+ &#39;breakdown&#39;:&lt;breakdown_selections&gt;}
+</pre></div>
 </div>
 <p class="last">This is the root level of the <cite>&lt;options&gt;</cite> parameter. The <cite>&#8216;pollutants&#8217;</cite> key
 is optional. If it is not included then all pollutants
@@ -457,7 +464,7 @@ table in the MOVES database. If the list is empty, no pollutants will be calcula
 the calculation of other pollutants. To get correct results, all dependencies must
 be included in this sequence. Dependencies are not documented yet (at least not here).
 To be safe,
-calculate all pollutants by not including the <tt class="docutils literal"><span class="pre">'pollutants'</span></tt> key in the <cite>&lt;options&gt;</cite>
+calculate all pollutants by not including the <code class="docutils literal"><span class="pre">'pollutants'</span></code> key in the <cite>&lt;options&gt;</cite>
 dictionary.</p>
 </div>
 </dd>
@@ -465,20 +472,22 @@ dictionary.</p>
 <dd>A real number between 0 and 1.</dd>
 <dt id="term-road-type">&lt;road_type&gt;</dt>
 <dd>An integer identifying the road type. Find this in the table roadtype in the MOVES database.
-Note that <tt class="xref py py-mod docutils literal"><span class="pre">movespy</span></tt> currently support only on-road analysis.</dd>
+Note that <code class="xref py py-mod docutils literal"><span class="pre">movespy</span></code> currently support only on-road analysis.</dd>
 <dt id="term-source-distr">&lt;source_distr&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="highlight-python"><pre>{&lt;source_type_id&gt;:&lt;proportion&gt;,
+<div class="highlight-python"><div class="highlight"><pre>{&lt;source_type_id&gt;:&lt;proportion&gt;,
  ...,
- &lt;source_type_id&gt;:&lt;proportion&gt;}</pre>
+ &lt;source_type_id&gt;:&lt;proportion&gt;}
+</pre></div>
 </div>
 <p class="last">For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
 </dd>
 <dt id="term-source-type-age-distr">&lt;source_type_age_distr&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="highlight-python"><pre>{&lt;age&gt;:&lt;proportion&gt;,
+<div class="highlight-python"><div class="highlight"><pre>{&lt;age&gt;:&lt;proportion&gt;,
  ...,
- &lt;age&gt;:&lt;proportion&gt;}</pre>
+ &lt;age&gt;:&lt;proportion&gt;}
+</pre></div>
 </div>
 <p class="last">For keys not included, the proportion is assumed to be zero. Proportion
 values should sum to one.</p>
@@ -488,9 +497,10 @@ values should sum to one.</p>
 MOVES database.</dd>
 <dt id="term-source-type-opmode-distr">&lt;source_type_opmode_distr&gt;</dt>
 <dd><p class="first">A mapping:</p>
-<div class="highlight-python"><pre>{&lt;opmode_id&gt;:&lt;proportion&gt;,
+<div class="highlight-python"><div class="highlight"><pre>{&lt;opmode_id&gt;:&lt;proportion&gt;,
  ...,
- &lt;opmode_id&gt;:&lt;proportion&gt;}</pre>
+ &lt;opmode_id&gt;:&lt;proportion&gt;}
+</pre></div>
 </div>
 <p class="last">For keys not given the proportion is assumed to be zero. Proportions should sum to one.</p>
 </dd>
@@ -506,7 +516,7 @@ MOVES database.</dd>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
@@ -514,14 +524,14 @@ MOVES database.</dd>
 <li><a class="reference internal" href="#introduction">Introduction</a><ul>
 <li><a class="reference internal" href="#installing-and-learning-python">Installing and learning Python</a></li>
 <li><a class="reference internal" href="#installing-moves">Installing MOVES</a></li>
-<li><a class="reference internal" href="#installing-movespy">Installing <tt class="docutils literal"><span class="pre">movespy</span></tt></a></li>
+<li><a class="reference internal" href="#installing-movespy">Installing <code class="docutils literal"><span class="pre">movespy</span></code></a></li>
 <li><a class="reference internal" href="#getting-help">Getting Help</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#examples">Examples</a><ul>
-<li><a class="reference internal" href="#using-movespy-to-run-moves">Using <tt class="docutils literal"><span class="pre">movespy</span></tt> to run MOVES</a></li>
-<li><a class="reference internal" href="#using-movespy-to-calculate-vsp-and-operating-mode">Using <tt class="docutils literal"><span class="pre">movespy</span></tt> to calculate VSP and Operating Mode</a></li>
-<li><a class="reference internal" href="#using-movespy-to-generate-emission-rate-look-up-tables">Using <tt class="docutils literal"><span class="pre">movespy</span></tt> to Generate Emission Rate Look-up Tables</a></li>
+<li><a class="reference internal" href="#using-movespy-to-run-moves">Using <code class="docutils literal"><span class="pre">movespy</span></code> to run MOVES</a></li>
+<li><a class="reference internal" href="#using-movespy-to-calculate-vsp-and-operating-mode">Using <code class="docutils literal"><span class="pre">movespy</span></code> to calculate VSP and Operating Mode</a></li>
+<li><a class="reference internal" href="#using-movespy-to-generate-emission-rate-look-up-tables">Using <code class="docutils literal"><span class="pre">movespy</span></code> to Generate Emission Rate Look-up Tables</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#moves-class-initializer-parameters">Moves Class Initializer Parameters</a></li>
@@ -529,12 +539,14 @@ MOVES database.</dd>
 </li>
 </ul>
 
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -551,18 +563,18 @@ MOVES database.</dd>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">movespy 0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Eric S. Talbot.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
