@@ -5,8 +5,48 @@
         <link>http://ericstalbot.github.io/</link>
         <description></description>
         <language>en-us</language>
-        <pubDate>Fri, 24 Jan 2014 00:00:00 -0500</pubDate>
+        <pubDate>Thu, 21 Apr 2016 00:00:00 -0600</pubDate>
         
+        <item>
+            <link>http://ericstalbot.github.io/2016/04/21/why_another_web_map.html</link>
+            <guid>http://ericstalbot.github.io/2016/04/21/why_another_web_map.html</guid>
+            <title><![CDATA[Why Another Web Map?]]></title>
+            <description><![CDATA[<h1>Why Another Web Map?</h1>
+<p>I recently launched my new web map at <a class="reference external" href="http://ericstalbot.pythonanywhere.com/">http://ericstalbot.pythonanywhere.com/</a>.
+I’m pretty excited about it, but why do we need another web map
+when the internet already has so many very good ones?</p>
+<p>I started working on the map back when I lived in Vermont, and
+it’s original purpose was very simple: to help me plan
+bike rides on the Green Mountain State’s beautiful back roads.
+I had tried to use the internet’s existing maps, but they didn’t
+work for me. So I decided to build my own map with a number
+of improvements:</p>
+<ul class="simple">
+<li>My new map shows trails and class 4 roads, which are unmaintained
+public right-of-way. They are usually unpassable to most vehicles
+but they are fun to ride and provide important connections between
+valleys.</li>
+<li>You can zoom way out on my map, and the smaller, less important
+roads never disappear. So you can zoom out far enough to plan
+a longer ride, but still see all the tiny dirt roads that you
+can piece together to make your ride fun.</li>
+<li>The map does not have distracting features like hill shading.
+The focus is on the roads, which makes it easy to
+see how roads connect to each other and make
+infinite possibilities for out-and-back and looping rides.</li>
+<li>The router on the map has no concept of “best”, or “fastest”
+path, so it does not force the path to follow the big
+roads, which often have too much traffic. Instead, it
+simply follows the least-distance path, which can produce
+some fun rides and help you see possible paths that you’ve never
+considered.</li>
+</ul>
+<p>Go ahead and try the map out. In the meantime, I’ll be working
+on making it even better.</p>
+]]></description>
+             <pubDate>Thu, 21 Apr 2016 00:00:00 -0600</pubDate>
+        </item>
+    
         <item>
             <link>http://ericstalbot.github.io/2014/01/24/viewing_spatial_data_in_ipython.html</link>
             <guid>http://ericstalbot.github.io/2014/01/24/viewing_spatial_data_in_ipython.html</guid>
@@ -34,7 +74,7 @@ about 30 minutes and 60 lines (including a HTML template) this is what I had:</p
 </div></blockquote>
 <p>Check out <a class="reference external" href="https://gist.github.com/ericstalbot/8605945">what</a> on github.</p>
 ]]></description>
-             <pubDate>Fri, 24 Jan 2014 00:00:00 -0500</pubDate>
+             <pubDate>Fri, 24 Jan 2014 00:00:00 -0700</pubDate>
         </item>
     
         <item>
@@ -44,31 +84,31 @@ about 30 minutes and 60 lines (including a HTML template) this is what I had:</p
             <description><![CDATA[<h1>spatialdigraph</h1>
 <p>NetworkX is a great Python package for working with networks. It sits right next to NumPy, matplotlib, and Shapely in my everyday transportation analysis toolbox. However, I’ve often wished that Networkx graphs had spatial capabilities. So that’s why I created <a class="reference external" href="https://github.com/ericstalbot/spatialdigraph">spatialdigraph</a>. Here’s how it works:</p>
 <p>First, load a SpatialDiGraph of a highway interchange in New Hampshire:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'mygraph.pickle'</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">g</span> <span class="o">=</span> <span class="n">cPickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">'mygraph.pickle'</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>This graph is in WGS84, so let’s transform to UTM for better drawing:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">g</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">fiona</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">from_epsg</span><span class="p">(</span><span class="mi">32617</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">g</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">fiona</span><span class="o">.</span><span class="n">crs</span><span class="o">.</span><span class="n">from_epsg</span><span class="p">(</span><span class="mi">32617</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>And now we can draw the graph:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">node_args</span> <span class="o">=</span> <span class="p">{</span><span class="s">'s'</span><span class="p">:</span><span class="mi">0</span><span class="p">},</span> <span class="n">edge_args</span> <span class="o">=</span> <span class="p">{</span><span class="s">'c'</span><span class="p">:</span><span class="s">'0.5'</span><span class="p">})</span>
 </pre></div>
 </div>
 <p>The SpatialDiGraph is a networkx.DiGraph subclass, so we have access to lots of useful
 methods from NetworkX. For example, we can get a shortest path on the network:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span> <span class="o">=</span> <span class="s">'194912632'</span><span class="p">,</span> <span class="s">'195049052'</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">origin</span><span class="p">,</span> <span class="n">destination</span> <span class="o">=</span> <span class="s">'194912632'</span><span class="p">,</span> <span class="s">'195049052'</span>
 <span class="n">path</span> <span class="o">=</span> <span class="n">networkx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Then with the added functionality that the SpatialDiGraph provides we can draw the path:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="o">*</span><span class="n">path</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s">'b'</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>And just to make it pretty, let’s also highlight the origin and destination nodes:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">scatter_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">zorder</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s">'orange'</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s">'none'</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">scatter_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">zorder</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s">'orange'</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">edgecolor</span> <span class="o">=</span> <span class="s">'none'</span><span class="p">)</span>
 
 <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">xy</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">scatter_args</span><span class="p">)</span>
@@ -81,7 +121,7 @@ methods from NetworkX. For example, we can get a shortest path on the network:</
 <a class="reference internal image-reference" href="http://ericstalbot.github.io/_images/interchange.png"><img alt="../../../_images/interchange.png" src="http://ericstalbot.github.io/_images/interchange.png" style="width: 600px;"/></a>
 <p>spatialdigraph is still a work in progress, but feel free to <a class="reference external" href="https://github.com/ericstalbot/spatialdigraph">check it out</a> on GitHub.</p>
 ]]></description>
-             <pubDate>Fri, 20 Dec 2013 00:00:00 -0500</pubDate>
+             <pubDate>Fri, 20 Dec 2013 00:00:00 -0700</pubDate>
         </item>
     
         <item>
@@ -103,7 +143,7 @@ detections. My tests show improvements over a naive method that ignores missed d
 <a class="reference internal image-reference" href="http://ericstalbot.github.io/_images/naive.png"><img alt="../../../_images/naive.png" src="http://ericstalbot.github.io/_images/naive.png" style="width: 600px;"/></a>
 <p>See my <a class="reference external" href="http://ericstalbot.github.io/bluetooth/TalbotBluetooth.pdf">paper</a> and IPython <a class="reference external" href="http://ericstalbot.github.io/bluetooth/RouteFlowsRoadsideDetectors-v2.html">notebook</a> for details on the estimation method.</p>
 ]]></description>
-             <pubDate>Fri, 06 Dec 2013 00:00:00 -0500</pubDate>
+             <pubDate>Fri, 06 Dec 2013 00:00:00 -0700</pubDate>
         </item>
     
     </channel>

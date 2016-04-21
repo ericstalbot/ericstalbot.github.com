@@ -15,7 +15,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <title>Bluetooth Vehicle Tracking: Correcting Short Trip Bias &mdash; Eric S. Talbot</title>
+        <title>Why Another Web Map? &mdash; Eric S. Talbot</title>
             <link rel="stylesheet" href="../../../_static/normalize.css" type="text/css">
             <link rel="stylesheet" href="../../../_static/sphinx.css" type="text/css">
             <link rel="stylesheet" href="../../../_static/main.css" type="text/css">
@@ -28,7 +28,7 @@
         <script>window.jQuery || document.write('<script src="../../../_static/vendor/jquery-1.8.2.min.js"><\/script>')</script>
         <script src="../../../_static/plugins.js"></script>
         <script src="../../../_static/main.js"></script>
-        <link rel="prev" title="spatialdigraph" href="../20/spatialdigraph.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.html" /><script type="text/javascript">
+        <link rel="next" title="Viewing Spatial Data in IPython" href="../../../2014/01/24/viewing_spatial_data_in_ipython.html" /><link rel="alternate" type="application/rss+xml" title="RSS" href="../../../rss.html" /><script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
         VERSION:     '1.5',
@@ -62,23 +62,41 @@
                 </li>
               </ul>
           </nav><div class="main-container" role="main"><div class="main wrapper body clearfix"><article><div class="timestamp postmeta">
-            <span>December 06, 2013</span>
+            <span>April 21, 2016</span>
         </div>
-    <div class="section" id="bluetooth-vehicle-tracking-correcting-short-trip-bias">
-<h1>Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</h1>
-<p>A new thing in transportation analysis is the use of arrays of Bluetooth detectors
-to track cars. The detectors work by recording the MAC IDs of wireless devices inside cars that
-pass nearby. By linking together multiple detections of the same MAC ID across different detectors,
-you can make a pretty good guess at the starting point, ending point, and route taken for a trip.</p>
-<p>There is one problem, however. Detectors can &#8220;miss&#8221; cars: even though a car has a wireless device
-inside, and it passes near a detector, the detector may fail to detect it. This has the effect of
-making some trips appear shorter than they really are. Take for example a car that passes near detectors
-1, 2, and 3. If detector 1 misses the car, the trip will appear to have passed by only
-detectors 2 and 3.</p>
-<p>To fix this problem, I&#8217;ve proposed an estimation method that explicitly accounts for missed
-detections. My tests show improvements over a naive method that ignores missed detections:</p>
-<a class="reference internal image-reference" href="../../../_images/naive.png"><img alt="../../../_images/naive.png" src="../../../_images/naive.png" style="width: 600px;" /></a>
-<p>See my <a class="reference external" href="http://ericstalbot.github.io/bluetooth/TalbotBluetooth.pdf">paper</a> and IPython <a class="reference external" href="http://ericstalbot.github.io/bluetooth/RouteFlowsRoadsideDetectors-v2.html">notebook</a> for details on the estimation method.</p>
+    <div class="section" id="why-another-web-map">
+<h1>Why Another Web Map?</h1>
+<p>I recently launched my new web map at <a class="reference external" href="http://ericstalbot.pythonanywhere.com/">http://ericstalbot.pythonanywhere.com/</a>.
+I&#8217;m pretty excited about it, but why do we need another web map
+when the internet already has so many very good ones?</p>
+<p>I started working on the map back when I lived in Vermont, and
+it&#8217;s original purpose was very simple: to help me plan
+bike rides on the Green Mountain State&#8217;s beautiful back roads.
+I had tried to use the internet&#8217;s existing maps, but they didn&#8217;t
+work for me. So I decided to build my own map with a number
+of improvements:</p>
+<ul class="simple">
+<li>My new map shows trails and class 4 roads, which are unmaintained
+public right-of-way. They are usually unpassable to most vehicles
+but they are fun to ride and provide important connections between
+valleys.</li>
+<li>You can zoom way out on my map, and the smaller, less important
+roads never disappear. So you can zoom out far enough to plan
+a longer ride, but still see all the tiny dirt roads that you
+can piece together to make your ride fun.</li>
+<li>The map does not have distracting features like hill shading.
+The focus is on the roads, which makes it easy to
+see how roads connect to each other and make
+infinite possibilities for out-and-back and looping rides.</li>
+<li>The router on the map has no concept of &#8220;best&#8221;, or &#8220;fastest&#8221;
+path, so it does not force the path to follow the big
+roads, which often have too much traffic. Instead, it
+simply follows the least-distance path, which can produce
+some fun rides and help you see possible paths that you&#8217;ve never
+considered.</li>
+</ul>
+<p>Go ahead and try the map out. In the meantime, I&#8217;ll be working
+on making it even better.</p>
 </div>
 
     <div class="postmeta">
@@ -88,18 +106,18 @@ detections. My tests show improvements over a naive method that ignores missed d
         
         
         </div><ul class="related clearfix">
-            <li class="left"> &laquo; <a href="../20/spatialdigraph.html">spatialdigraph</a></li>
-            <li class="right"></li>
+            <li class="left"></li>
+            <li class="right"><a href="../../../2014/01/24/viewing_spatial_data_in_ipython.html">Viewing Spatial Data in IPython</a> &raquo; </li>
         </ul></article><aside class="sidebar"><section><div class="widget">
     <h1>Recent Posts</h1>
     <ul><li>
-            <a href="../../../2016/04/21/why_another_web_map.html">Why Another Web Map?</a>
+            <a href="#">Why Another Web Map?</a>
         </li><li>
             <a href="../../../2014/01/24/viewing_spatial_data_in_ipython.html">Viewing Spatial Data in IPython</a>
         </li><li>
-            <a href="../20/spatialdigraph.html">spatialdigraph</a>
+            <a href="../../../2013/12/20/spatialdigraph.html">spatialdigraph</a>
         </li><li>
-            <a href="#">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>
+            <a href="../../../2013/12/06/bluetooth_vehicle_tracking___correcting_short_trip_bias.html">Bluetooth Vehicle Tracking:  Correcting Short Trip Bias</a>
         </li></ul>
 </div>
 </section><section><div class="widget" id="searchbox" role="search">
